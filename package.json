@@ -1,0 +1,27 @@
+{
+  "name": "optical-aligned-text",
+  "version": "0.5.0",
+  "description": "React.js component to align first letters of a new line visually to its left «text box side» (optical alignment)",
+  "main": "lib/index.js",
+  "repository": "https://github.com/Coderwelsch/react-optical-aligned-text",
+  "author": "Coderwelsch, Joseph Ribbe",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "clean": "rm -rf ./lib",
+    "build": "yarn clean; babel src --out-dir ./lib"
+  },
+  "peerDependencies": {
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "prop-types": "^15.7.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-react": "^7.8.3",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "prop-types": "^15.7.2"
+  }
+}
