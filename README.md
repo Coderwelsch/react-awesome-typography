@@ -4,7 +4,7 @@ Typography matters. Even on the web. This is a `react component` for all typogra
 
 ## Example
 
-[![Edit optical-aligned-text-example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/broken-waterfall-7bqi0?fontsize=14&hidenavigation=1&theme=dark)
+[![Edit react-optical-aligned-example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/cocky-http-noexe?fontsize=14&hidenavigation=1&theme=dark)
 
 ## Install
 
