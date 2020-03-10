@@ -32,6 +32,7 @@ export default class OpticalAlignment extends Component {
 	static NODE_CHECK_ALIGNMENT_CLASS = "oa-elem";
 	static NODE_BR_CLASS = "oa-break";
 	static NODE_LAST_ELEMENT_WIDTH_KEY = "data-oa-width";
+	
 	static INSTANCES = [];
 	
 	containerRef = React.createRef();
@@ -55,9 +56,8 @@ export default class OpticalAlignment extends Component {
 	}
 
 	componentWillUnmount () {
-		delete OpticalAlignment.INSTANCES[
-			OpticalAlignment.INSTANCES.indexOf(this)
-		];
+		const { INSTANCES: i } = OpticalAlignment;
+		i.splice(i.indexOf(this), 1);
 	}
 
 	handleResize () {
@@ -211,7 +211,9 @@ let WINDOW_RESIZE_HANDLER;
 if (typeof window !== "undefined" && !WINDOW_RESIZE_HANDLER) {
 	WINDOW_RESIZE_HANDLER = window.addEventListener("resize", () => {
 		for (const instance of OpticalAlignment.INSTANCES) {
-			instance.handleResize();
+			if (instance) {
+				instance.handleResize();
+			}
 		}
 	});
 }
