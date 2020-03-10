@@ -40,8 +40,9 @@ export default () =>
       <h1>Willy Wonka!</h1>
       <p>«What the hell is going on here?»</p>
       <p>
-      	This is a normal aligned text. Can you see <br/>
-	the difference to the paragraph abnove?
+        This is a normal aligned text. Can you see <br/>
+        the difference to the paragraph above (left text box side)?
+      </p>
     </section>
   </OpticalAlignedText>;
 ```
@@ -88,5 +89,8 @@ Please feel free to develop this plugin together 🥳!
 # ToDos
 
 - [ ] Write tests
+- [ ] Add support for rtl text
+- [ ] Improve performance. It isn’t that bad, but it could be better!
 - [ ] Fix multiline word breaks when using `&shy;` html entities
+- [ ] Fix component rerenders. Currently it’s not supported to rerender the children of `<OpticalAlignedText>` component
 - [x] Main functionality
