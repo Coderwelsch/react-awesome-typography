@@ -13,3 +13,13 @@ yarn install optical-aligned-text
 # or
 npm install optical-aligned-texts
 ```
+
+# Feel free to contribute!
+
+Please feel free to develop this plugin together ☺️🥳!
+
+# ToDos
+
+- [ ] Write tests
+- [ ] Fix multiline word breaks when using `&shy;` html entities
+- [x] Main functionality
