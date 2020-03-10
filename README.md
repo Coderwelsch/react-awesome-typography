@@ -14,9 +14,71 @@ yarn install optical-aligned-text
 npm install optical-aligned-texts
 ```
 
+## Usage
+
+Just use the component like this:
+```javascript
+import OpticalAlignedText from "optical-aligned-text";
+
+const rules = [
+  {
+		name: "W", // just to find rules faster
+		test: /^\n?W/, // regex to test if a word starts with `W` 
+		offset: -0.25 // `ch` (character) units
+	}, {
+		name: "Quotes",
+		test: /^\n?([»«„“])/,
+		offset: -0.9
+	}
+];
+
+export default () => 
+  <OpticalAlignedText rules={ rules }>
+    <section className="container">
+      <h1>Willy Wonka!</h1>
+      <p>«What the hell is going on here?»</p>
+    </section>
+  </OpticalAlignedText>;
+```
+
+# Documentation
+
+## Properties
+
+The OpticalAlignedText component offers the following properties:  
+
+### `rules` • required  
+*Description:* Array of objects to define the optical alignment behaviours of each word. 
+
+#### Each rule object should be structured like this:
+```javascript
+{
+  name: "W" // optional – the name of that rule. Believe me, you will need it in bigger projects!
+  test: /^\n?W/, // required – regex to test on every found word in the text
+  offset: -0.9 // required – «margin-left» adjustment value, unit: "ch" (x-character width)
+}
+```
+
+### `affectedTags` • optional  
+*Default:* `["h1", "h2", "h3", "h4", "h5", "h6", "p", "em"]`  
+*Description:* Html tags that should be checked.
+
+### `debug` • optional  
+*Default:* `false`
+*Description:* Renders the affected words with a background-color. Aligned words are colored red, idle words are colored blue.
+
+
+### `debugAlignedWordBackground` • optional  
+*Default:* `"#ff9169"`
+*Description:* Color for the affected words background in debug mode.
+
+### `debugIdleWordBackground` • optional  
+*Default:* `"#d0f4ff"`
+*Description:* Color for the idle words background in debug mode.
+
 # Feel free to contribute!
 
-Please feel free to develop this plugin together ☺️🥳!
+Please feel free to develop this plugin together 🥳!
 
 # ToDos
 
