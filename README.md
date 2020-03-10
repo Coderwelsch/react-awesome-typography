@@ -11,7 +11,7 @@ Typography matters. Even on the web. This is a `react component` for all typogra
 ```shell
 yarn install optical-aligned-text
 # or
-npm install optical-aligned-texts
+npm install optical-aligned-text
 ```
 
 ## Usage
