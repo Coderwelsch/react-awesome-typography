@@ -18,7 +18,9 @@ npm install optical-aligned-texts
 
 Just use the component like this:
 ```javascript
+import React from "react";
 import OpticalAlignedText from "optical-aligned-text";
+
 
 const rules = [
   {
@@ -37,6 +39,9 @@ export default () =>
     <section className="container">
       <h1>Willy Wonka!</h1>
       <p>«What the hell is going on here?»</p>
+      <p>
+      	This is a normal aligned text. Can you see <br/>
+	the difference to the paragraph abnove?
     </section>
   </OpticalAlignedText>;
 ```
