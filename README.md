@@ -4,14 +4,12 @@ Typography matters. Even on the web. This is a `react component` for all typogra
 
 ## Example
 
-![](./doc/readme/example.gif)
-
-
+[![Edit optical-aligned-text-example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/broken-waterfall-7bqi0?fontsize=14&hidenavigation=1&theme=dark)
 
 ## Install
 
 ```shell
 yarn install optical-aligned-text
 # or
-npm install optical-aligned-text
+npm install optical-aligned-texts
 ```
