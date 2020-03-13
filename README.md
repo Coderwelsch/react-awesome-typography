@@ -1,6 +1,6 @@
 ![Optical Aligned Text Teaser](doc/readme/teaser-image/teaser-image.jpg)
 
-Typography matters. Even on the web. This is a `react component` for all typography nerds, who wants to have more control over  texts on websites and web apps.
+Typography matters. Even on the web. This is a `react component` for all typography nerds, who wants to have more control over texts on websites and web apps.
 
 ## Example
 
@@ -16,10 +16,12 @@ npm install optical-aligned-texts
 
 # Feel free to contribute!
 
-Please feel free to develop this plugin together ☺️🥳!
+Please feel free to develop this plugin with me together ☺️🥳!
 
 # ToDos
 
 - [ ] Write tests
 - [ ] Fix multiline word breaks when using `&shy;` html entities
+- [ ] Fix/Add support of consideration of css’ «hanging-punctuation» feature  
+- [ ] Add support for right-to-left text
 - [x] Main functionality
