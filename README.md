@@ -9,7 +9,7 @@ Typography matters. Even on the web. This is a `react component` for all typogra
 ## Install
 
 ```shell
-yarn install optical-aligned-text
+yarn add optical-aligned-text
 # or
 npm install optical-aligned-text
 ```
