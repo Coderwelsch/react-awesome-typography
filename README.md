@@ -9,7 +9,7 @@ Typography matters. Even on the web. This is a `react component` for all typogra
 ## Install
 
 ```shell
-yarn install optical-aligned-text
+yarn add optical-aligned-text
 # or
 npm install optical-aligned-text
 ```
@@ -23,15 +23,15 @@ import OpticalAlignedText from "optical-aligned-text";
 
 
 const rules = [
-  {
-		name: "W", // just to find rules faster
-		test: /^\n?W/, // regex to test if a word starts with `W` 
-		offset: -0.25 // `ch` (character) units
-	}, {
-		name: "Quotes",
-		test: /^\n?([»«„“])/,
-		offset: -0.9
-	}
+    {
+        name: "W", // just to find rules faster
+        test: /^\n?W/, // regex to test if a word starts with `W` 
+        offset: -0.25 // `ch` (character) units
+    }, {
+        name: "Quotes",
+        test: /^\n?([»«„“])/,
+        offset: -0.9
+    }
 ];
 
 export default () => 
