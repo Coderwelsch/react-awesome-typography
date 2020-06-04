@@ -13,9 +13,7 @@ export default class OpticalAlignment extends Component {
 				PropTypes.number
 			])
 		})).isRequired,
-		affectedTags: PropTypes.arrayOf(PropTypes.oneOf([
-			"h1", "h2", "h3", "h4", "h5", "h6", "p", "em"
-		])),
+		affectedTags: PropTypes.arrayOf(PropTypes.string),
 
 		debug: PropTypes.bool,
 		debugAlignedWordBackground: PropTypes.string,
