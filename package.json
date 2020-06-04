@@ -1,6 +1,6 @@
 {
   "name": "optical-aligned-text",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "React.js component to align first letters of a new line visually to its left «text box side» (optical alignment)",
   "main": "lib/index.js",
   "repository": "https://github.com/Coderwelsch/react-optical-aligned-text",
