@@ -22,9 +22,9 @@ import React from "react";
 import OpticalAlignedText from "optical-aligned-text";
 
 
-const rules = [
+const alignRules = [
     {
-        name: "W", // just to find rules faster
+        name: "W", // just to find alignRules faster
         test: /^\n?W/, // regex to test if a word starts with `W` 
         offset: -0.25 // `ch` (character) units
     }, {
@@ -35,7 +35,7 @@ const rules = [
 ];
 
 export default () => 
-  <OpticalAlignedText rules={ rules }>
+  <OpticalAlignedText alignRules={ alignRules }>
     <section className="container">
       <h1>Willy Wonka!</h1>
       <p>«What the hell is going on here?»</p>
@@ -53,34 +53,29 @@ export default () =>
 
 The OpticalAlignedText component offers the following properties:  
 
-### `rules` • required  
+### `alignRules` • required  
 *Description:* Array of objects to define the optical alignment behaviours of each word. 
 
 #### Each rule object should be structured like this:
 ```javascript
-{
-  name: "W" // optional – the name of that rule. Believe me, you will need it in bigger projects!
-  test: /^\n?W/, // required – regex to test on every found word in the text
-  offset: -0.9 // required – «margin-left» adjustment value, unit: "ch" (x-character width)
-}
+[
+	{
+      name: "W", // optional – the name of that rule. Believe me, you will need it in bigger projects!
+      test: /^W/, // required – regex to test on every found word in the text
+      offset: -0.9 // required – «margin-left» adjustment value, unit: "ch" (0-character (zero) width)
+    }
+]	
 ```
-
-### `affectedTags` • optional  
-*Default:* `["h1", "h2", "h3", "h4", "h5", "h6", "p", "em"]`  
-*Description:* Html tags that should be checked.
 
 ### `debug` • optional  
 *Default:* `false`
 *Description:* Renders the affected words with a background-color. Aligned words are colored red, idle words are colored blue.
 
 
-### `debugAlignedWordBackground` • optional  
+### `debugOptions` • optional
+
 *Default:* `"#ff9169"`
 *Description:* Color for the affected words background in debug mode.
-
-### `debugIdleWordBackground` • optional  
-*Default:* `"#d0f4ff"`
-*Description:* Color for the idle words background in debug mode.
 
 # Feel free to contribute!
 
@@ -90,7 +85,7 @@ Please feel free to develop this plugin together 🥳!
 
 - [ ] Write tests
 - [ ] Add support for rtl text
-- [ ] Improve performance. It isn’t that bad, but it could be better!
+- [x] Improve performance. It isn’t that bad, but it could be better!
 - [ ] Fix multiline word breaks when using `&shy;` html entities
 - [ ] Fix component rerenders. Currently it’s not supported to rerender the children of `<OpticalAlignedText>` component
 - [x] Main functionality
