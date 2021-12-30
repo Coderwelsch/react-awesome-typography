@@ -1,0 +1,44 @@
+html,
+body {
+	margin: 0;
+
+	font-family: Georgia, serif;
+	line-height: 1.5;
+	font-size: 1.25rem;
+	color: #d1d1d1;
+
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	background: rgb(34, 34, 34);
+}
+
+section {
+	width: 100%;
+	max-width: 50rem;
+
+	margin: 0 auto;
+	padding: 2rem;
+	box-sizing: border-box;
+}
+
+button {
+	margin-left: 2rem;
+	margin-top: 2rem;
+	padding: 0.5rem 0.75rem;
+
+	border: none;
+	border-radius: 0.25rem;
+	outline: none;
+
+	color: white;
+	font-weight: bold;
+
+	cursor: pointer;
+
+	background: #b83232;
+}
+
+button.enabled {
+	background: #32b85a;
+}
