@@ -91,7 +91,7 @@ The _react-awesome-typography_ component offers the following properties / setti
 See: https://barbarakristaponis.files.wordpress.com/2015/11/typedesignquote2-e1447789973739.png
 When active, adds non breaking space between last and second last words.
 
-### `alignmentRules` • optional
+### `alignmentRules: AlignmentRule[]` • optional
 
 Array of alignment rules to define the optical alignment behaviours for each word. Each rule object should be structured like this:
 
@@ -107,7 +107,7 @@ Array of alignment rules to define the optical alignment behaviours for each wor
 ]    
 ```
 
-### `replacementRules` • optional
+### `replacementRules: ReplacementRule[]` • optional
 
 Rules to fix and replace misspellings by using regular expressions: 
 
@@ -122,7 +122,7 @@ Rules to fix and replace misspellings by using regular expressions:
 ]    
 ```
 
-mainDelimiter: string,
+### `mainDelimiter: string` • optional
 	fixWidows: boolean,
 	breakInnerWordRegex: RegExp,
 
@@ -137,12 +137,10 @@ blue.
 *Description:* Set background colors for debug mode:
 
 ```javascript
-[
-    {
-        idleBgColor: "rgba(0, 200, 255, 0.14)",
-        activeBgColor: "rgba(255, 99, 43, 0.2)"  
-    }
-]
+{
+    idleBgColor: "rgba(0, 200, 255, 0.14)",
+    activeBgColor: "rgba(255, 99, 43, 0.2)"  
+}
 ```
 
 # Feel free to contribute!
@@ -152,10 +150,11 @@ It would be an honor working with you!
 # ToDos
 
 - [x] Add Feature: Optical alignment (`alignmentRules`)
+- [x] Add Feature: Preserve Widows (`fixWidows`)
 - [x] Add Feature: Replace typical misspellings (`replacementRules`)
 - [x] Fix multiline word breaks when using special html entities in word
 - [x] Fix component rerenders when children changes
 - [ ] Add more default `replacementRules`
 - [ ] Add more default `alignmentRules`
-- [ ] Write tests
+- [ ] Write tests (*caugh*)
 - [ ] Add support for rtl text
