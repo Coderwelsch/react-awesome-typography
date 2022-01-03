@@ -8,7 +8,7 @@ typographer hates! This is a react component for all who needs more control over
 
 ## Example
 
-[![Edit React Awesome Typography](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/broken-waterfall-7bqi0?fontsize=14&hidenavigation=1&theme=dark)
+[![Edit react-awesome-typography](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/happy-driscoll-wt1gx?fontsize=14&hidenavigation=1&theme=dark)
 
 You can also find an example app (create react app) under `./example` …
 
@@ -129,10 +129,12 @@ blue.
 *Description:* Set background colors for debug mode:
 
 ```javascript
-{
-    idleBgColor: "rgba(0, 200, 255, 0.14)",
-    activeBgColor: "rgba(255, 99, 43, 0.2)"  
-} 
+[
+    {
+        idleBgColor: "rgba(0, 200, 255, 0.14)",
+        activeBgColor: "rgba(255, 99, 43, 0.2)"  
+    }
+]
 ```
 
 # Feel free to contribute!
