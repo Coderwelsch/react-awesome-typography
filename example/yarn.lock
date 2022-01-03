@@ -6041,10 +6041,6 @@ open@^8.0.9, open@^8.4.0:
     is-docker "^2.1.1"
     is-wsl "^2.2.0"
 
-"optical-aligned-text@link:..":
-  version "0.0.0"
-  uid ""
-
 optionator@^0.8.1:
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/optionator/-/optionator-0.8.3.tgz#84fa1d036fe9d3c7e21d99884b601167ec8fb495"
@@ -6937,6 +6933,11 @@ react-app-polyfill@^3.0.0:
     raf "^3.4.1"
     regenerator-runtime "^0.13.9"
     whatwg-fetch "^3.6.2"
+
+react-awesome-typography@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-awesome-typography/-/react-awesome-typography-1.0.0.tgz#85ead4db3175b10aeaebc2eb6c79f84a37b77b3e"
+  integrity sha512-kI/KM7/aOCBPubm92eTcduQ50IOuxpKxZmNocjtbZVLMI2R54Mial3nHHbTd07zH59I622vgR/OB+ljx7spWyw==
 
 react-dev-utils@^12.0.0:
   version "12.0.0"
