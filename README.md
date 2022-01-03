@@ -1,7 +1,6 @@
 ![React Awesome Typography](doc/readme/teaser-image/teaser-image.jpg)
 
-Typography matters – even in the web! This typescript react component will align words visually and replaces typical misspellings every
-typographer hates! This is a react component for all who needs more control over copy texts in their apps.
+#### Typography matters – even in the web! This typescript react component will align words visually and replaces typical misspellings every typographer hates. This is a react component for all who needs more control over copy texts in their apps.
 
 <br/>
 <hr/>
