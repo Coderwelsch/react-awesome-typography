@@ -88,7 +88,7 @@ The _react-awesome-typography_ component offers the following properties / setti
 
 ### `fixWidows` • optional
 
-See: https://barbarakristaponis.files.wordpress.com/2015/11/typedesignquote2-e1447789973739.png
+See: https://barbarakristaponis.files.wordpress.com/2015/11/typedesignquote2-e1447789973739.png  
 When active, adds non breaking space between last and second last words.
 
 ### `alignmentRules: AlignmentRule[]` • optional
