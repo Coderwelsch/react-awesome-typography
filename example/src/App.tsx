@@ -1,45 +1,58 @@
-import React, { useEffect, useState } from "react"
-import OpticalAlignment from "optical-aligned-text"
+import React, { useState } from "react"
+import OpticalAlignment from "react-awesome-typography"
+
+import "./index.css"
 
 
-const texts = [
-	`Dies ist ein ........ Typo&shy;blind&shy;text. An ihm kann man sehen, ob alle Buch&shy;staben da sind und wie sie aussehen. Manchmal benutzt man Worte wie Hamburge&shy;fonts, Raf&shy;gen&shy;duks oder Hand&shy;gloves, um Schriften zu testen. Manchmal Sätze, die alle Buch&shy;staben des Alpha&shy;bets ent&shy;halten - man nennt diese Sätze »Pangrams«. Sehr bekannt ist dieser: The quick brown fox jumps over the lazy old dog. Oft werden in Typo&shy;blind&shy;texte auch fremd&shy;sprachige Satz&shy;teile ein&shy;ge&shy;baut (AVAIL® and Wefox™ are testing aussi la Kerning), um die Wirkung in anderen Sprachen zu testen. In La&shy;tein&shy;isch sieht zum Beispiel fast jede Schrift gut aus. Quod erat demon&shy;stran&shy;dum. Seit 1975 fehlen in den meisten Test&shy;texten die Zahlen, weswegen nach TypoGb. 204 § ab dem Jahr 2034 Zahlen in 86 der Texte zur Pflicht werden. Nicht&shy;einhalt&shy;ung wird mit bis zu 245 € oder 368 $ bestraft. Genauso wichtig in sind mittler&shy;weile auch Âçcèñtë, die in neueren Schriften aber fast immer enthalten sind. Ein wichtiges aber schwierig zu inte&shy;grie&shy;rendes Feld sind OpenType-Funktionali&shy;täten. Je nach Software und Vor&shy;ein&shy;stellungen können ein&shy;ge&shy;baute Kapi&shy;tälchen, Kerning oder Ligaturen (sehr pfiffig) nicht richtig dar&shy;ge&shy;stellt werden. Dies ist ein Typo&shy;blind&shy;text. An ihm kann man sehen, ob alle Buch&shy;staben da sind und wie sie aussehen.`,
-]
+const HEADING_TEXT = `
+	You think web typo&shy;graphy can’t be good?
+`
+
+const COPY_TEXT = `
+	"This react component transforms your copy text into awesome text, every wants to read ................. " You can define your own rules for perfect optical alignment and fixing misspellings and typographical issues like wrong typed ellipses: ..............................  
+`
+
+function cn (...classNames: any[]): string {
+	return classNames.filter(c => typeof c === "string").join(" ")
+}
 
 function App () {
-	const [ currentTextIndex, setCurrentTextIndex ] = useState(Math.floor(Math.random()* texts.length))
-
-	const loop = () => {
-		setTimeout(() => {
-			let nextIndex = currentTextIndex
-
-			while (currentTextIndex === nextIndex) {
-				nextIndex = Math.floor(Math.random()* texts.length)
-			}
-
-			setCurrentTextIndex(nextIndex)
-		}, 3000)
-	}
-
-	// useEffect(() => {
-	// 	loop()
-	// })
+	const [ awesomeTypeActive, setAwesomeTypeActive ] = useState(true)
 
 	return (
 		<section>
-			<div className="container">
-				<h1>
-					<OpticalAlignment debug={ true }>
-						{ `Willy&shy;Wonka` }
-						Willy&shy;Wonka Wother&shy;fuckerrrr
-					</OpticalAlignment>
-				</h1>
+			<button
+				className={ cn(awesomeTypeActive && "enabled") }
+				onClick={ () => setAwesomeTypeActive(!awesomeTypeActive) }
+			>
+				{ awesomeTypeActive ? `✔︎ Awesome Type enabled` : `✘︎ Awesome Type disabled` }
+			</button>
 
-				{/*<p>*/}
-				{/*	<OpticalAlignment debug={ true }>*/}
-				{/*		{ texts[currentTextIndex] }*/}
-				{/*	</OpticalAlignment>*/}
-				{/*</p>*/}
+			<hr />
+
+			<div className={ cn("container") }>
+				{ awesomeTypeActive ?
+					<h1>
+						<OpticalAlignment debug={ true }>
+							You think web typo&shy;graphy can't be good?
+						</OpticalAlignment>
+					</h1>
+					:
+					<h1 dangerouslySetInnerHTML={ { __html: HEADING_TEXT } } />
+				}
+
+				{ awesomeTypeActive ?
+					<p>
+						<OpticalAlignment debug={ true }>
+							"This react component transforms your copy text into awesome text, everyone wants to read ................. "
+							<br/><br/>
+							You can define your own rules to optical align words (on left text column side), fix misspellings and typographical issues like
+							wrong typed ellipses: ..............................
+						</OpticalAlignment>
+					</p>
+					:
+					<p dangerouslySetInnerHTML={ { __html: COPY_TEXT } } />
+				}
 			</div>
 		</section>
 	)

@@ -1,14 +1,20 @@
 {
-	"name": "optical-aligned-text",
+	"name": "react-awesome-typography",
 	"version": "1.0.0",
-	"description": "A react component to optical align text blocks on their left text block side",
+	"description": "A react component to fix typo misspellings and optical align words to the left text column side",
+	"keywords": ["react", "typography", "optical", "align", "awesome typo", "text"],
 	"main": "lib/index.js",
+	"directories": {
+		"lib": "lib"
+	},
 	"repository": "https://github.com/Coderwelsch/react-optical-aligned-text",
 	"author": "Coderwelsch, Joseph Ribbe",
 	"license": "MIT",
 	"private": false,
 	"scripts": {
+		"install": "yarn build",
 		"build": "tsc",
+		"clear-lib": "rm -rf ./lib/",
 		"start": "tsc --watch"
 	},
 	"peerDependencies": {

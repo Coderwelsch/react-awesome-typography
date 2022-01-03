@@ -1,4 +1,9 @@
-import React, { Component, CSSProperties, ReactNode, RefObject } from "react"
+import React, {
+	Component,
+	CSSProperties,
+	ReactNode,
+	RefObject
+} from "react"
 
 import {
 	ReplacementRule,
@@ -7,7 +12,7 @@ import {
 } from "./default-rules"
 
 
-interface DebugOptions {
+export interface DebugOptions {
 	idleBgColor: string
 	activeBgColor: string
 }
@@ -16,7 +21,7 @@ interface DebugOptions {
 export interface AlignmentRule {
 	id: string,
 	test: RegExp,
-	//className?: string,
+	className?: string,
 	offset?: number
 }
 
@@ -24,35 +29,34 @@ export interface AlignmentRule {
 export interface IOpticalAlignmentProps {
 	debug?: boolean
 	children: any,
-	alignRules: AlignmentRule[]
+	mainDelimiter: string,
+	fixWidows: boolean,
+	breakInnerWordRegex: RegExp,
+	alignmentRules: AlignmentRule[]
 	replacementRules: ReplacementRule[]
 	debugOptions?: DebugOptions
 }
 
 
-export const REGEX_HTML_ENCODED_CHARS: RegExp = /(&[^;]+;)|(\u00AD)/
-export const REGEX_SEPARATE_WORD: RegExp = /(&\w+;|\u00AD)|(\p{Letter}+|\p{Mark})/gu
-
-//export const REGEX_FIND_CHARS_TO_BREAK: RegExp = /[^\w&;,.\p{Letter}\p{Mark}]/u
-export const REGEX_BREAK_CHARS: RegExp = / /
-
 export default class OpticalAlignment extends Component<IOpticalAlignmentProps> {
-
 	static DEFAULT_ALIGN_RULES: AlignmentRule[] = [ ...alignRules ]
 	static DEFAULT_REPLACE_RULES: ReplacementRule[] = [ ...replacementRules ]
 
 	static defaultProps: IOpticalAlignmentProps = {
 		children: "",
 		debug: false,
-		alignRules: OpticalAlignment.DEFAULT_ALIGN_RULES,
+		mainDelimiter: " ",
+		fixWidows: true,
+		breakInnerWordRegex: /(&[^;]+;|\u00AD)/g,
+		alignmentRules: OpticalAlignment.DEFAULT_ALIGN_RULES,
 		replacementRules: OpticalAlignment.DEFAULT_REPLACE_RULES,
 		debugOptions: {
-			idleBgColor: "rgba(0,200,255,0.34)",
-			activeBgColor: "rgba(255,99,43,0.27)",
+			idleBgColor: "rgba(0,200,255,0.14)",
+			activeBgColor: "rgba(255,99,43,0.2)",
 		},
 	}
 
-	private wordRefs: any = []
+	private wordRefs: any[] = []
 
 	constructor (props: IOpticalAlignmentProps) {
 		super(props)
@@ -65,11 +69,11 @@ export default class OpticalAlignment extends Component<IOpticalAlignmentProps> 
 		prevState: Readonly<{}>,
 		snapshot?: any,
 	) {
-		this.applySideEffects()
+		this.applyLayoutEffects()
 	}
 
 	componentDidMount () {
-		this.applySideEffects()
+		this.applyLayoutEffects()
 
 		// add resize event listener to re-layout words
 		window.addEventListener("resize", this.handleResize)
@@ -80,7 +84,7 @@ export default class OpticalAlignment extends Component<IOpticalAlignmentProps> 
 	}
 
 	handleResize () {
-		this.applySideEffects()
+		this.applyLayoutEffects()
 	}
 
 	/*
@@ -96,10 +100,20 @@ export default class OpticalAlignment extends Component<IOpticalAlignmentProps> 
 	}
 
 	/*
-	* Handles / compute all layout effects
+	* Handles / delegtes all layout effects
 	* */
-	private applySideEffects () {
+	private applyLayoutEffects () {
+		this.resetLayoutEffects()
 		this.alignWords()
+	}
+
+	private resetLayoutEffects () {
+		this.wordRefs.forEach(ref => {
+			const ruleIndex = Number(ref.getAttribute("data-ri"))
+			const ruleIsActive = ref.getAttribute("data-active") === "true"
+
+			this.resetWordStyling(ref, ruleIndex)
+		})
 	}
 
 	/*
@@ -111,56 +125,68 @@ export default class OpticalAlignment extends Component<IOpticalAlignmentProps> 
 			return
 		}
 
-		let parentRect
-
 		for (const ref of this.wordRefs) {
+			let parent = ref?.parentNode
+			let parentRect
+
 			if (ref === null) {
+				continue
+			} else if (!parent) {
+				console.log("Parent isn’t defined")
 				continue
 			}
 
-			if (!parentRect && ref?.parentNode) {
+			if (parent) {
 				parentRect = ref.parentNode.getBoundingClientRect()
 			}
 
+			const ruleIndex = Number.parseInt(ref.getAttribute("data-ri"))
 			const rect = ref.getBoundingClientRect()
 
-			// if word is on left side of the parent’s box
-			// apply style by rule’s offset value or className
-			console.log(ref.innerText, ref, parentRect.x, rect.x)
-
 			if (parentRect.x === rect.x) {
-				const ruleIndex = Number.parseInt(ref.getAttribute("data-ri"))
-
-				if (ruleIndex && !Number.isNaN(ruleIndex) && this.props.alignRules[ruleIndex]) {
+				// if word is on left side of the parent’s box
+				// apply style by rule’s offset value or className
+				if (ruleIndex && !Number.isNaN(ruleIndex) && this.props.alignmentRules[ruleIndex]) {
 					const {
 						offset,
-						// className
-					} = this.props.alignRules[ruleIndex]
+						className,
+					} = this.props.alignmentRules[ruleIndex]
 
 					if (offset) {
 						// "ch" means percentage of the width of the "0" character (zero)
 						ref.style.marginLeft = `${ offset }ch`
 					}
 
-					// if (className) {
-					// 	// "ch" means percentage of the width of the "0" character (zero)
-					// 	ref.classList.add(className)
-					// }
+					ref.setAttribute("data-active", "true")
+
+					if (className) {
+						ref.classList.add(className)
+					}
 
 					// set active color when debug is activated
 					if (this.props.debug) {
 						ref.style.backgroundColor = this.props.debugOptions?.activeBgColor
 					}
 				}
-			} else if (rect.x > parentRect.x) {
-				// reset the style if it’s not at the left side
-				this.resetWordStyling(ref)
 			}
 		}
 	}
 
-	resetWordStyling (element: HTMLElement) {
-		element.style.marginLeft = ""
+	resetWordStyling (element: HTMLElement, ruleIndex: number) {
+		const {
+			offset,
+			className,
+		} = this.props.alignmentRules[ruleIndex]
+
+		if (className) {
+			element.classList.remove(className)
+		}
+
+		if (offset) {
+			element.style.marginLeft = ""
+		}
+
+		element.setAttribute("data-active", "false")
 
 		if (this.props.debug && this.props.debugOptions) {
 			element.style.backgroundColor = this.props.debugOptions.idleBgColor!
@@ -170,118 +196,158 @@ export default class OpticalAlignment extends Component<IOpticalAlignmentProps> 
 	}
 
 	/*
-	* Destructures a string into separate react components
+	* Adds a new string to the render queue or concatenates the new string
+	* to the last element in queue
 	* */
-	destructureChildren (
-		child: string | number,
-		childIndex: number,
-	): ReactNode | ReactNode[] {
-		// resets references to zero
-		this.wordRefs = []
+	private static pushOrAddToWordQueue (queue: (string | JSX.Element)[], word: string | JSX.Element) {
+		const lastElem = queue[queue.length - 1]
 
-		// split child (string) into single words by splitting " "
-		const words = String(child).split(REGEX_BREAK_CHARS)
+		if (
+			typeof lastElem === "string" &&
+			typeof word === "string"
+		) {
+			queue[queue.length - 1] += word
+		} else {
+			queue.push(word)
+		}
+	}
 
-		console.log("WORDS", encodeURI(words[0]))
+	private fixMisspellings (text: string): string {
+		// replace misspellings by given rules in first place
+		let fixedMisspellings = text
 
-		const wordQueue = []
+		// checks
+		for (let i = 0; i < this.props.replacementRules.length; i++) {
+			const rule = this.props.replacementRules[i]
 
-		let wordCount = 0
+			const {
+				test,
+				replace,
+			} = rule
 
-		for (const word_ of words) {
-			let word = word_
+			const globalTest = new RegExp(test, "gmu")
 
-			// replace words
-			for (let k = 0; k < this.props.replacementRules.length; k++) {
-				const rule = this.props.replacementRules[k]
-
-				const {
-					test,
-					replace,
-				} = rule
-
-				if (test.test(word)) {
-					word = word.replace(test, replace)
-				}
-			}
-
-			let foundAtLeastOneRule = false
-
-			// checks for each word every possible value;
-			// will breaks at first found rule and bakes it
-			// into the span’s data attribute
-			for (let i = 0; i < this.props.alignRules.length; i++) {
-				const rule = this.props.alignRules[i]
-
-				const {
-					id,
-					test: regExp,
-				} = rule
-
-				if (regExp.test(word)) {
-					// yep, found one:
-					foundAtLeastOneRule = true
-
-					// set styles according to debug mode options:
-					const style = this.props.debug ? {
-						backgroundColor: this.props.debugOptions?.idleBgColor,
-					} : undefined
-
-					// split the word, when it contains html encoded chars like &shy;
-					// if (REGEX_HTML_ENCODED_CHARS.test(word)) {
-					// 	let splitted = word.match(REGEX_SEPARATE_WORD)
-					//
-					// 	console.log("RESULT", splitted);
-					//
-					// } else {
-					// 	console.log("DAMN")
-					// }
-
-					wordQueue.push(
-						this.renderSpan({
-							key: `${ childIndex }_${ wordCount }-${ id } `,
-							ruleIndex: i,
-							shouldSaveRef: true,
-							word,
-							style
-						})
-					)
-
-					wordQueue.push(" ")
-
-					break
-				}
-			}
-
-			// when no rule was found for the word, do:
-			if (!foundAtLeastOneRule) {
-				// when a word contains special symbols like "&shy;" soft breaks
-				if (REGEX_HTML_ENCODED_CHARS.test(word)) {
-					wordQueue.push(
-						this.renderSpan({
-							key: `encoded-${ childIndex }_${ wordCount }`,
-							word,
-						}),
-					)
-
-					wordQueue.push(" ")
-				} else {
-					// checks if the last element of the render queue
-					// is a string and concatenate the new word to the last element:
-					const lastElemId = wordQueue.length - 1
-
-					if (typeof wordQueue[lastElemId] === "string") {
-						wordQueue[lastElemId] += word + " "
-					} else {
-						wordQueue.push(word + " ")
-					}
-				}
-			}
-
-			wordCount++
+			// @ts-ignore
+			fixedMisspellings = fixedMisspellings.replaceAll(globalTest, replace)
 		}
 
-		return wordQueue
+		return fixedMisspellings
+	}
+
+	/*
+	* Destructures a string into separate react components
+	* */
+	destructureStringChild (
+		child: string,
+		childIndex: number,
+	): string | (JSX.Element | string)[] {
+		let sanitizedChild = child
+
+		// sanitize child from redundant \n and \t line breaks
+		sanitizedChild = sanitizedChild.replaceAll(/[\n\t]/gm, "")
+
+		// replace misspellings by given rules in first place
+		sanitizedChild = this.fixMisspellings(sanitizedChild)
+
+		// split child (string) into single words, splitted by the prop’s `mainDelimiter`
+		const splitExpression = new RegExp(this.props.mainDelimiter, "g")
+		const wordList = sanitizedChild.split(splitExpression)
+
+		if (!wordList) {
+			return child
+		}
+
+		const renderQueue: (string | JSX.Element)[] = []
+		const { breakInnerWordRegex } = this.props
+
+		// default styles (debug):
+		const style = this.props.debug ? {
+			backgroundColor: this.props.debugOptions?.idleBgColor,
+		} : undefined
+
+		wordList.forEach((word, index) => {
+			const isLastWord = index === wordList.length - 1
+			const isSecondLastWord = index === wordList.length - 2
+
+			let subWords: string[] = [ word ]
+			let joinString = this.props.mainDelimiter
+
+			// split the word, when it contains html encoded chars like &shy;
+			// and check substrings also for rules to apply
+			if (breakInnerWordRegex.test(word)) {
+				// resets join-string to concatenate sub words back to one word
+				joinString = ""
+
+				subWords = word.split(breakInnerWordRegex)
+			}
+
+			// saves if at least one rule was found;
+			// when not, the current word will just been added
+			// as a normal string without any modifications
+			let foundAtLeastOneRule = false
+
+			// check rules for each sub word
+			subWords.forEach((subWord, index_) => {
+				for (let i = 0; i < this.props.alignmentRules.length; i++) {
+					const {
+						id,
+						test,
+					} = this.props.alignmentRules[i]
+
+					const ruleExp = new RegExp(test, "m")
+
+					if (ruleExp.test(subWord)) {
+						// yep, found one:
+						foundAtLeastOneRule = true
+
+						OpticalAlignment.pushOrAddToWordQueue(renderQueue,
+							this.renderSpan({
+								key: `${ childIndex }_${ index }-${ id }-${ index_ }`,
+								ruleIndex: i,
+								shouldSaveRef: true,
+								word: subWord,
+								style,
+							}),
+						)
+
+						if (!isLastWord) {
+							OpticalAlignment.pushOrAddToWordQueue(renderQueue, joinString)
+						}
+
+						break
+					}
+				}
+
+				// when no rule was found for the word, do:
+				if (!foundAtLeastOneRule) {
+					// when a word contains special symbols like "&shy;" soft breaks
+					if (breakInnerWordRegex.test(subWord)) {
+						OpticalAlignment.pushOrAddToWordQueue(renderQueue,
+							this.renderSpan({
+								key: `encoded-${ childIndex }_${ index }-${ index_ }`,
+								word: subWord,
+							}),
+						)
+					} else {
+						OpticalAlignment.pushOrAddToWordQueue(renderQueue, subWord)
+					}
+				}
+
+			})
+
+			// https://www.fonts.com/content/learning/fontology/level-2/text-typography/rags-widows-orphans
+			// if current word is the second last word
+			// use the non-breaking space to disable single word breaks (widows)
+			if (isSecondLastWord) {
+				OpticalAlignment.pushOrAddToWordQueue(renderQueue, "\xa0") // … = &nbsp;
+			} else if (!isLastWord) {
+				// when the current sub word isn’t the last,
+				// add the `mainDelimeter` back:
+				OpticalAlignment.pushOrAddToWordQueue(renderQueue, this.props.mainDelimiter)
+			}
+		})
+
+		return renderQueue
 	}
 
 	private renderSpan ({
@@ -315,17 +381,25 @@ export default class OpticalAlignment extends Component<IOpticalAlignmentProps> 
 			return null
 		}
 
-		const elemsToRender: (string | ReactNode)[] = []
+		// resets references to zero
+		this.wordRefs = []
 
+		const elemsToRender: (string | ReactNode)[] = []
 		let childIndex = 0
 
 		React.Children.forEach(this.props.children, (child, index) => {
+
 			// Checks for string children to wrap for optiocal aligning
 			if (
 				typeof child === "string" ||
 				typeof child === "number"
 			) {
-				elemsToRender.push(this.destructureChildren(child, childIndex))
+				elemsToRender.push(
+					this.destructureStringChild(
+						String(child),
+						childIndex,
+					),
+				)
 			} else {
 				// otherwise just add the child to the render queue:
 				elemsToRender.push(child)

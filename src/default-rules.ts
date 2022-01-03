@@ -1,5 +1,46 @@
 import { AlignmentRule } from "./"
 
+export interface ReplacementRule {
+	test: RegExp,
+	replace: string | ((...args: string[]) => string),
+	description?: string
+}
+
+const replacementRules: ReplacementRule[] = [
+	{
+		test: /(["])([^"]+)(["])/,
+		replace: "«$2»",
+		description: "replace wrong quotes with french ones"
+	},
+	{
+		test: /[']/,
+		replace: "’",
+		description: "replace wrong apostrophes with right ones"
+	},
+	{
+		test: /( )?(\.{2,})( )?/,
+		replace: function (fullString, startChar, ellipsis, endChar) {
+			let replaced = ""
+
+			if (startChar) {
+				replaced += "&nbsp;"
+			}
+
+			if (ellipsis) {
+				replaced += "…"
+			}
+
+			if (endChar) {
+				replaced += "&nbsp;"
+			}
+
+			return replaced
+		},
+		description: "replace wrong ellipsis",
+	}
+]
+
+
 // Georgia example
 const alignRules: AlignmentRule[] = [
 	{
@@ -9,17 +50,12 @@ const alignRules: AlignmentRule[] = [
 	},
 	{
 		id: "quotes",
-		test: /^([»„“])/,
+		test: /^([«])/,
 		offset: -0.9
 	},
 	{
-		id: "W",
-		test: /^W/,
-		offset: -0.15,
-	},
-	{
-		id: "w",
-		test: /^w/,
+		id: "Ww",
+		test: /^[Ww]/,
 		offset: -0.15,
 	},
 	{
@@ -29,7 +65,7 @@ const alignRules: AlignmentRule[] = [
 	},
 	{
 		id: "Vv",
-		test: /^Vv/,
+		test: /^[Vv]/,
 		offset: 0.06
 	},
 	{
@@ -46,20 +82,11 @@ const alignRules: AlignmentRule[] = [
 		id: "T",
 		test: /^T/,
 		offset: -0.1
-	}
-]
-
-export interface ReplacementRule {
-	test: RegExp,
-	replace: string // ((word: string) => string) |
-	description?: string
-}
-
-const replacementRules: ReplacementRule[] = [
+	},
 	{
-		test: /\.{2,}/,
-		replace: "…",
-		description: "replace wrong ellipsis",
+		id: "Yy",
+		test: /^[Yy]/,
+		offset: -0.1
 	}
 ]
 
