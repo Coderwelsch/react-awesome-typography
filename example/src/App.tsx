@@ -4,55 +4,55 @@ import OpticalAlignment from "react-awesome-typography"
 import "./index.css"
 
 
-const HEADING_TEXT = `
-	You think web typo&shy;graphy can’t be good?
-`
-
-const COPY_TEXT = `
-	"This react component transforms your copy text into awesome text, every wants to read ................. " You can define your own rules for perfect optical alignment and fixing misspellings and typographical issues like wrong typed ellipses: ..............................  
-`
-
 function cn (...classNames: any[]): string {
-	return classNames.filter(c => typeof c === "string").join(" ")
+	return classNames.filter((c) => typeof c === "string").join(" ")
 }
 
 function App () {
 	const [ awesomeTypeActive, setAwesomeTypeActive ] = useState(true)
+	const [ debug, setDebug ] = useState(true)
 
 	return (
-		<section>
+		<section className={ cn(debug && "debug-active") }>
 			<button
 				className={ cn(awesomeTypeActive && "enabled") }
-				onClick={ () => setAwesomeTypeActive(!awesomeTypeActive) }
+				onClick={ () => {
+					setDebug(!awesomeTypeActive)
+					setAwesomeTypeActive(!awesomeTypeActive)
+				} }
 			>
-				{ awesomeTypeActive ? `✔︎ Awesome Type enabled` : `✘︎ Awesome Type disabled` }
+				{ awesomeTypeActive
+					? `✔︎ Awesome Type enabled`
+					: `✘︎ Awesome Type disabled` }
+			</button>
+
+			<button
+				className={ cn(debug && "enabled") }
+				onClick={ () => setDebug(!debug) }
+			>
+				{ debug ? `✔︎ Debug enabled` : `✘︎ Debug disabled` }
 			</button>
 
 			<hr />
 
 			<div className={ cn("container") }>
-				{ awesomeTypeActive ?
+				<OpticalAlignment
+					enabled={ awesomeTypeActive }
+					debug={ debug }
+				>
 					<h1>
-						<OpticalAlignment debug={ true }>
-							You think web typo&shy;graphy can't be good?
-						</OpticalAlignment>
+						Web typo&shy;graphy on steroids !
 					</h1>
-					:
-					<h1 dangerouslySetInnerHTML={ { __html: HEADING_TEXT } } />
-				}
 
-				{ awesomeTypeActive ?
 					<p>
-						<OpticalAlignment debug={ true }>
-							"This react component transforms your copy text into awesome text, everyone wants to read ................. "
-							<br/><br/>
-							You can define your own rules to optical align words (on left text column side), fix misspellings and typographical issues like
-							wrong typed ellipses: ..............................
-						</OpticalAlignment>
+						"This react component transforms your copy text into awesome text,
+						everyone wants to read ................. "
+						<br />
+						<br />
+						<i>You can define your own rules to optical align words (on left text column side),</i> fix misspellings and typographical issues like wrong
+						typed ellipses: ..............................
 					</p>
-					:
-					<p dangerouslySetInnerHTML={ { __html: COPY_TEXT } } />
-				}
+				</OpticalAlignment>
 			</div>
 		</section>
 	)
