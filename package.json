@@ -1,6 +1,6 @@
 {
 	"name": "react-awesome-typography",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "A react component to fix typo misspellings and optical align words to the left text column side",
 	"keywords": ["react", "typography", "optical", "align", "awesome typo", "text"],
 	"main": "lib/index.js",
