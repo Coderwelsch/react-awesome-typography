@@ -18,31 +18,15 @@ const replacementRules: ReplacementRule[] = [
 		replace: "’",
 	},
 	{
-		description: "adds hairspaces between punctuation characters (?!.)",
-		test: / ?([?!.]+)/g,
-		replace: "$1",
+		description: "replace wrong ellipsis",
+		test: /( )?(\.{2,})( )?/g,
+		replace: "$1…$3",
 	},
 	{
-		description: "replace wrong ellipsis",
-		test: /( )?([.]{2,})( )?/g,
-		replace: function (fullString, startChar, ellipsis, endChar) {
-			let replaced = ""
-
-			if (startChar) {
-				replaced += "&nbsp;"
-			}
-
-			if (ellipsis) {
-				replaced += "…"
-			}
-
-			if (endChar) {
-				replaced += "&nbsp;"
-			}
-
-			return replaced
-		},
-	}
+		description: "adds hairspaces between punctuation characters (?!.)",
+		test: /([?!.]+)/g,
+		replace: "$1",
+	},
 ]
 
 

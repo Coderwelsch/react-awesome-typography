@@ -41,7 +41,7 @@ function App () {
 					debug={ debug }
 				>
 					<h1>
-						Web typo&shy;graphy on steroids !
+						Web typo&shy;graphy on steroids ....... !
 					</h1>
 
 					<p>
