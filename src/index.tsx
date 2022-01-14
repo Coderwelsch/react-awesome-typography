@@ -286,7 +286,6 @@ export default class OpticalAlignment extends Component<IOpticalAlignmentProps> 
 				// resets join-string to concatenate sub words back to one word
 				joinString = ""
 				subWords = word.split(breakInnerWordRegex)
-				console.log("SPLITTED", subWords)
 			}
 
 			// saves if at least one rule was found;
