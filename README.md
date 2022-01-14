@@ -154,7 +154,8 @@ It would be an honor working with you!
 - [x] Add Feature: Replace typical misspellings (`replacementRules`)
 - [x] Fix multiline word breaks when using special html entities in word
 - [x] Fix component rerenders when children changes
-- [ ] Add more default `replacementRules`
-- [ ] Add more default `alignmentRules`
+- [ ] Add Feature: Find syllables and softwrap them (using `&shy;`)
+- [ ] Add Feature: more default `replacementRules`
+- [ ] Add Feature: more default `alignmentRules`
+- [ ] Add Feature: support for rtl text
 - [ ] Write tests (*caugh*)
-- [ ] Add support for rtl text
