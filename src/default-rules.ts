@@ -8,17 +8,23 @@ export interface ReplacementRule {
 
 const replacementRules: ReplacementRule[] = [
 	{
-		test: /(["])([^"]+)(["])/,
+		description: "replace wrong quotes with good ol’ french ones",
+		test: /(["'`’])((?:[^\n]|(?!\1))+)(\1)/gi,
 		replace: "«$2»",
-		description: "replace wrong quotes with french ones"
 	},
 	{
-		test: /[']/,
+		description: "replace wrong apostrophes with right ones",
+		test: /(\w)[']/g,
 		replace: "’",
-		description: "replace wrong apostrophes with right ones"
 	},
 	{
-		test: /( )?(\.{2,})( )?/,
+		description: "adds hairspaces between punctuation characters (?!.)",
+		test: / ?([?!.]+)/g,
+		replace: "$1",
+	},
+	{
+		description: "replace wrong ellipsis",
+		test: /( )?([.]{2,})( )?/g,
 		replace: function (fullString, startChar, ellipsis, endChar) {
 			let replaced = ""
 
@@ -36,7 +42,6 @@ const replacementRules: ReplacementRule[] = [
 
 			return replaced
 		},
-		description: "replace wrong ellipsis",
 	}
 ]
 
@@ -44,19 +49,14 @@ const replacementRules: ReplacementRule[] = [
 // Georgia example
 const alignRules: AlignmentRule[] = [
 	{
-		id: "quotes-p",
-		test: /^([»„“]P)/,
-		offset: -0.95
-	},
-	{
 		id: "quotes",
 		test: /^([«])/,
-		offset: -0.9
+		offset: -1
 	},
 	{
 		id: "Ww",
 		test: /^[Ww]/,
-		offset: -0.15,
+		offset: -0.15
 	},
 	{
 		id: "j",

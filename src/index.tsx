@@ -1,14 +1,12 @@
 import React, {
 	Component,
 	CSSProperties,
-	ReactNode,
-	RefObject
+	RefObject,
 } from "react"
 
 import {
-	ReplacementRule,
-	replacementRules,
 	alignRules,
+	ReplacementRule, replacementRules,
 } from "./default-rules"
 
 
@@ -27,10 +25,12 @@ export interface AlignmentRule {
 
 
 export interface IOpticalAlignmentProps {
-	debug?: boolean
+	enabled: boolean,
+	debug?: boolean,
 	children: any,
 	mainDelimiter: string,
 	fixWidows: boolean,
+	childTypes: null | string[],
 	breakInnerWordRegex: RegExp,
 	alignmentRules: AlignmentRule[]
 	replacementRules: ReplacementRule[]
@@ -43,9 +43,11 @@ export default class OpticalAlignment extends Component<IOpticalAlignmentProps> 
 	static DEFAULT_REPLACE_RULES: ReplacementRule[] = [ ...replacementRules ]
 
 	static defaultProps: IOpticalAlignmentProps = {
+		enabled: true,
 		children: "",
 		debug: false,
 		mainDelimiter: " ",
+		childTypes: null,
 		fixWidows: true,
 		breakInnerWordRegex: /(&[^;]+;|\u00AD)/g,
 		alignmentRules: OpticalAlignment.DEFAULT_ALIGN_RULES,
@@ -69,10 +71,18 @@ export default class OpticalAlignment extends Component<IOpticalAlignmentProps> 
 		prevState: Readonly<{}>,
 		snapshot?: any,
 	) {
+		if (!this.props.enabled) {
+			return
+		}
+
 		this.applyLayoutEffects()
 	}
 
 	componentDidMount () {
+		if (!this.props.enabled) {
+			return
+		}
+
 		this.applyLayoutEffects()
 
 		// add resize event listener to re-layout words
@@ -110,8 +120,6 @@ export default class OpticalAlignment extends Component<IOpticalAlignmentProps> 
 	private resetLayoutEffects () {
 		this.wordRefs.forEach(ref => {
 			const ruleIndex = Number(ref.getAttribute("data-ri"))
-			const ruleIsActive = ref.getAttribute("data-active") === "true"
-
 			this.resetWordStyling(ref, ruleIndex)
 		})
 	}
@@ -146,7 +154,7 @@ export default class OpticalAlignment extends Component<IOpticalAlignmentProps> 
 			if (parentRect.x === rect.x) {
 				// if word is on left side of the parent’s box
 				// apply style by rule’s offset value or className
-				if (ruleIndex && !Number.isNaN(ruleIndex) && this.props.alignmentRules[ruleIndex]) {
+				if (!Number.isNaN(ruleIndex) && this.props.alignmentRules[ruleIndex]) {
 					const {
 						offset,
 						className,
@@ -241,13 +249,11 @@ export default class OpticalAlignment extends Component<IOpticalAlignmentProps> 
 		child: string,
 		childIndex: number,
 	): string | (JSX.Element | string)[] {
-		let sanitizedChild = child
-
 		// sanitize child from redundant \n and \t line breaks
-		sanitizedChild = sanitizedChild.replaceAll(/[\n\t]/gm, "")
-
-		// replace misspellings by given rules in first place
-		sanitizedChild = this.fixMisspellings(sanitizedChild)
+		const sanitizedChild = this.fixMisspellings(
+			// replace misspellings by given rules in first place
+			child.replaceAll(/[\n\t]/gm, ""),
+		)
 
 		// split child (string) into single words, splitted by the prop’s `mainDelimiter`
 		const splitExpression = new RegExp(this.props.mainDelimiter, "g")
@@ -266,9 +272,11 @@ export default class OpticalAlignment extends Component<IOpticalAlignmentProps> 
 		} : undefined
 
 		wordList.forEach((word, index) => {
+			const subWordsQueue: string[] = []
 			const isLastWord = index === wordList.length - 1
 			const isSecondLastWord = index === wordList.length - 2
 
+			let disableWordBreak = false
 			let subWords: string[] = [ word ]
 			let joinString = this.props.mainDelimiter
 
@@ -277,8 +285,8 @@ export default class OpticalAlignment extends Component<IOpticalAlignmentProps> 
 			if (breakInnerWordRegex.test(word)) {
 				// resets join-string to concatenate sub words back to one word
 				joinString = ""
-
 				subWords = word.split(breakInnerWordRegex)
+				console.log("SPLITTED", subWords)
 			}
 
 			// saves if at least one rule was found;
@@ -293,14 +301,13 @@ export default class OpticalAlignment extends Component<IOpticalAlignmentProps> 
 						id,
 						test,
 					} = this.props.alignmentRules[i]
-
 					const ruleExp = new RegExp(test, "m")
 
 					if (ruleExp.test(subWord)) {
 						// yep, found one:
 						foundAtLeastOneRule = true
 
-						OpticalAlignment.pushOrAddToWordQueue(renderQueue,
+						OpticalAlignment.pushOrAddToWordQueue(subWordsQueue,
 							this.renderSpan({
 								key: `${ childIndex }_${ index }-${ id }-${ index_ }`,
 								ruleIndex: i,
@@ -310,8 +317,15 @@ export default class OpticalAlignment extends Component<IOpticalAlignmentProps> 
 							}),
 						)
 
-						if (!isLastWord) {
-							OpticalAlignment.pushOrAddToWordQueue(renderQueue, joinString)
+						if (isSecondLastWord) {
+							disableWordBreak = true
+
+							OpticalAlignment.pushOrAddToWordQueue(subWordsQueue, this.renderSpan({
+								key: `no_widows-${ childIndex }_${ index }-${ index_ }`,
+								word: `&nbsp;`,
+							}))
+						} else if (!isLastWord) {
+							OpticalAlignment.pushOrAddToWordQueue(subWordsQueue, joinString)
 						}
 
 						break
@@ -320,30 +334,27 @@ export default class OpticalAlignment extends Component<IOpticalAlignmentProps> 
 
 				// when no rule was found for the word, do:
 				if (!foundAtLeastOneRule) {
-					// when a word contains special symbols like "&shy;" soft breaks
+					// when a word contains special symbols like "&shy;" soft break them
 					if (breakInnerWordRegex.test(subWord)) {
-						OpticalAlignment.pushOrAddToWordQueue(renderQueue,
+						OpticalAlignment.pushOrAddToWordQueue(subWordsQueue,
 							this.renderSpan({
 								key: `encoded-${ childIndex }_${ index }-${ index_ }`,
 								word: subWord,
 							}),
 						)
 					} else {
-						OpticalAlignment.pushOrAddToWordQueue(renderQueue, subWord)
+						OpticalAlignment.pushOrAddToWordQueue(subWordsQueue, subWord)
 					}
 				}
-
 			})
 
-			// https://www.fonts.com/content/learning/fontology/level-2/text-typography/rags-widows-orphans
-			// if current word is the second last word
-			// use the non-breaking space to disable single word breaks (widows)
-			if (isSecondLastWord) {
-				OpticalAlignment.pushOrAddToWordQueue(renderQueue, "\xa0") // … = &nbsp;
-			} else if (!isLastWord) {
-				// when the current sub word isn’t the last,
-				// add the `mainDelimeter` back:
-				OpticalAlignment.pushOrAddToWordQueue(renderQueue, this.props.mainDelimiter)
+			if (!isSecondLastWord && !isLastWord || !foundAtLeastOneRule) {
+				OpticalAlignment.pushOrAddToWordQueue(subWordsQueue, this.props.mainDelimiter)
+			}
+
+			// add all collected subwords and adds them to the renderQueue
+			for (const word of subWordsQueue) {
+				OpticalAlignment.pushOrAddToWordQueue(renderQueue, word)
 			}
 		})
 
@@ -351,13 +362,13 @@ export default class OpticalAlignment extends Component<IOpticalAlignmentProps> 
 	}
 
 	private renderSpan ({
-		key,
 		ruleIndex,
-		style,
 		word,
 		shouldSaveRef = false,
+		...props
 	}: {
 		key: string,
+		id?: string,
 		word: string,
 		ruleIndex?: number,
 		style?: CSSProperties,
@@ -365,18 +376,34 @@ export default class OpticalAlignment extends Component<IOpticalAlignmentProps> 
 	}) {
 		return (
 			<span
-				key={ key }
-				id={ key }
 				data-ri={ ruleIndex }
 				// @ts-ignore
 				ref={ shouldSaveRef ? this.setRef.bind(this) : undefined }
-				style={ style }
 				dangerouslySetInnerHTML={ { __html: word } }
+				{ ...props }
 			/>
 		)
 	}
 
+	recursiveDestructure (children: any[]): any {
+		return React.Children.map(children, (child, index) => {
+			let childProps: any = {}
+
+			if (child.props) {
+				// String has no Prop
+				childProps.children = this.recursiveDestructure(child.props.children)
+				return React.cloneElement(child, childProps)
+			}
+
+			return this.destructureStringChild(child, index)
+		})
+	}
+
 	render () {
+		if (!this.props.enabled) {
+			return this.props.children
+		}
+
 		if (!this.props.children) {
 			return null
 		}
@@ -384,30 +411,6 @@ export default class OpticalAlignment extends Component<IOpticalAlignmentProps> 
 		// resets references to zero
 		this.wordRefs = []
 
-		const elemsToRender: (string | ReactNode)[] = []
-		let childIndex = 0
-
-		React.Children.forEach(this.props.children, (child, index) => {
-
-			// Checks for string children to wrap for optiocal aligning
-			if (
-				typeof child === "string" ||
-				typeof child === "number"
-			) {
-				elemsToRender.push(
-					this.destructureStringChild(
-						String(child),
-						childIndex,
-					),
-				)
-			} else {
-				// otherwise just add the child to the render queue:
-				elemsToRender.push(child)
-			}
-
-			childIndex++
-		})
-
-		return elemsToRender
+		return this.recursiveDestructure(this.props.children)
 	}
 }
