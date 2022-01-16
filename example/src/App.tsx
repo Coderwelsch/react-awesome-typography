@@ -14,24 +14,26 @@ function App () {
 
 	return (
 		<section className={ cn(debug && "debug-active") }>
-			<button
-				className={ cn(awesomeTypeActive && "enabled") }
-				onClick={ () => {
-					setDebug(!awesomeTypeActive)
-					setAwesomeTypeActive(!awesomeTypeActive)
-				} }
-			>
-				{ awesomeTypeActive
-					? `✔︎ Awesome Type enabled`
-					: `✘︎ Awesome Type disabled` }
-			</button>
+			<div className={ "button-group" }>
+				<button
+					className={ cn(awesomeTypeActive && "enabled") }
+					onClick={ () => {
+						setDebug(!awesomeTypeActive)
+						setAwesomeTypeActive(!awesomeTypeActive)
+					} }
+				>
+					{ awesomeTypeActive
+						? `✔︎ Awesome Type enabled`
+						: `✘︎ Awesome Type disabled` }
+				</button>
 
-			<button
-				className={ cn(debug && "enabled") }
-				onClick={ () => setDebug(!debug) }
-			>
-				{ debug ? `✔︎ Debug enabled` : `✘︎ Debug disabled` }
-			</button>
+				<button
+					className={ cn(debug && "enabled") }
+					onClick={ () => setDebug(!debug) }
+				>
+					{ debug ? `✔︎ Debug enabled` : `✘︎ Debug disabled` }
+				</button>
+			</div>
 
 			<hr />
 
@@ -44,14 +46,16 @@ function App () {
 						Web typo&shy;graphy on steroids ....... !
 					</h1>
 
+					<blockquote>
+						"This React component optimizes the readability of your texts and fixes typographical errors automatically."
+					</blockquote>
+
 					<p>
-						"This react component transforms your copy text into awesome text,
-						everyone wants to read ................. "
-						<br />
-						<br />
-						<i>You can define your own rules to optical align words (on left text column side),</i> fix misspellings and typographical issues like wrong
-						typed ellipses: ..............................
+						This component comes with a (not completed) list of regular expression based rule sets to adjust and replace misspellings in your texts.
+						The <code>react-awesome-typography</code> component uses two different kinds of rulesets:
 					</p>
+
+					<h2>Replacement Rules</h2>
 				</OpticalAlignment>
 			</div>
 		</section>

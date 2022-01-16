@@ -18,14 +18,14 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 
-	background: rgb(34, 34, 34);
+	background: rgb(16, 21, 24);
 }
 
 section {
 	width: 100%;
 	max-width: 50rem;
 
-	padding: 2rem;
+	padding: 0 2rem;
 	margin: 0 auto;
 	box-sizing: border-box;
 }
@@ -42,8 +42,12 @@ hr {
 	border-left: 1px dashed transparent;
 }
 
+.button-group {
+	width: 100%;
+	padding: 1rem 0 ;
+}
+
 button {
-	margin-bottom: 2rem;
 	padding: 0.5rem 0.75rem;
 
 	border: none;
@@ -66,7 +70,26 @@ button.enabled {
 	background: #32b85a;
 }
 
-.rule-ellipsis {
-	color: blue;
-	background: green !important;
+blockquote {
+	margin: 0;
+	padding: 1rem 2rem;
+
+	font-style: italic;
+	letter-spacing: 0.005rem;
+
+	color: #5a9ab8;
+
+	border-left: 3px solid #2590cd;
+
+	background: rgb(25, 34, 43);
+}
+
+code {
+	padding: 0 0.2rem;
+	border-radius: 0.25rem;
+
+	font-family: monospace;
+	font-size: 1rem;
+
+	background: #122e3d;
 }
