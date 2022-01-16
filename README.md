@@ -149,13 +149,15 @@ It would be an honor working with you!
 
 # ToDos
 
+- [x] Fix multiline word breaks when using special html entities in word
+- [x] Fix component rerenders when children changes
+- [x] Add Feature: Typescript support 
 - [x] Add Feature: Optical alignment (`alignmentRules`)
 - [x] Add Feature: Preserve Widows (`fixWidows`)
 - [x] Add Feature: Replace typical misspellings (`replacementRules`)
-- [x] Fix multiline word breaks when using special html entities in word
-- [x] Fix component rerenders when children changes
-- [ ] Add Feature: Find syllables and softwrap them (using `&shy;`)
+- [ ] Add Feature: Support `dangerouslySetInnerHTML` children
+- [ ] Add Feature: Find syllables and softwrap them (using `&shy;`) (auto hyphenation)
 - [ ] Add Feature: more default `replacementRules`
 - [ ] Add Feature: more default `alignmentRules`
 - [ ] Add Feature: support for rtl text
-- [ ] Write tests (*caugh*)
+- [ ] Write tests *(\*caugh\*)*
