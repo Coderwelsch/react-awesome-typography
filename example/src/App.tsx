@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import OpticalAlignment from "react-awesome-typography"
+import AwesomeTypo from "react-awesome-typography"
 
 import "./index.css"
 
@@ -36,10 +36,7 @@ function App () {
 			<hr />
 
 			<div className={ cn("container") }>
-				<OpticalAlignment
-					enabled={ awesomeTypeActive }
-					debug={ debug }
-				>
+				<AwesomeTypo>
 					<h1>
 						Web typo&shy;graphy on steroids ....... !
 					</h1>
@@ -52,7 +49,7 @@ function App () {
 						<i>You can define your own rules to optical align words (on left text column side),</i> fix misspellings and typographical issues like wrong
 						typed ellipses: ..............................
 					</p>
-				</OpticalAlignment>
+				</AwesomeTypo>
 			</div>
 		</section>
 	)
