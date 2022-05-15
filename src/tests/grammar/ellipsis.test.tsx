@@ -1,17 +1,24 @@
-import React from "react"
+import React, { FC } from "react"
 import "@testing-library/jest-dom"
 import { cleanup, render } from "@testing-library/react"
 
-import RAT from "../../index"
+import RAT, { AwesomeTypographyProps } from "../../index"
 
 
 afterEach(() => {
 	cleanup()
 })
 
+const NoOpticalAlign:FC<AwesomeTypographyProps> = (props) => (
+	<RAT
+		{ ...props }
+		opticalAlignment={ false }
+	/>
+)
+
 describe("replaces wrong ellipses", () => {
 	it("... to …", function () {
-		const { container } = render(<RAT>...</RAT>)
+		const { container } = render(<NoOpticalAlign>...</NoOpticalAlign>)
 		expect(container.innerHTML).toBe("…")
 	})
 })

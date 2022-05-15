@@ -5,3 +5,11 @@ export interface GrammarRule {
 }
 
 export type GrammarRules = GrammarRule[]
+
+export interface AlignmentRule {
+	id: string,
+	test: RegExp,
+	className?: string,
+	offset?: number
+}
+
