@@ -1,6 +1,6 @@
-import React, { FC } from "react"
 import "@testing-library/jest-dom"
 import { cleanup, render } from "@testing-library/react"
+import React, { FC } from "react"
 
 import RAT, { AwesomeTypographyProps } from "../../index"
 

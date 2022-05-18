@@ -1,8 +1,8 @@
-import React, { Children, cloneElement, Fragment, ReactElement, ReactNode } from "react"
+import React, { Children, cloneElement, ReactElement, ReactNode } from "react"
 
 import { GrammarRules } from "../types"
 import { fixGrammar } from "./grammar"
-import { generateOpticalAlignmentNodes } from "./optical-alignment"
+import { OpticalAlignmentNodes } from "./optical-alignment"
 
 
 const hasChildren = (
@@ -48,7 +48,12 @@ export const transformChild = ({
 		const fixedText = fixGrammar(child, grammarRules)
 
 		if (opticalAlignment) {
-			return generateOpticalAlignmentNodes(fixedText)
+			return (
+				<OpticalAlignmentNodes
+					key={ index }
+					fixedText={ fixedText }
+				/>
+			)
 		}
 
 		return fixedText
@@ -64,7 +69,11 @@ export const transformChild = ({
 			const fixedText: string = fixGrammar(children, grammarRules)
 
 			if (opticalAlignment) {
-				modifiedChildren = generateOpticalAlignmentNodes(fixedText)
+				modifiedChildren = (
+					<OpticalAlignmentNodes
+						fixedText={ fixedText }
+					/>
+				)
 			} else {
 				modifiedChildren = fixedText
 			}

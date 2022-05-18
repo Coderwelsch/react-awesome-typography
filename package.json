@@ -22,7 +22,7 @@
 		"install": "yarn build",
 		"build": "tsc",
 		"clear-lib": "rm -rf ./lib/",
-		"start": "tsc --watch",
+		"start": "tsc --watch & yarn --cwd ./example start",
 		"test": "jest",
 		"test:watch": "jest --watch"
 	},

@@ -1,6 +1,5 @@
 import { AlignmentRule } from "../../../types"
 
-
 // Georgia example
 const alignmentRules: AlignmentRule[] = [
 	{
