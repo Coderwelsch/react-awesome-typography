@@ -36,7 +36,7 @@ function App () {
 			<hr />
 
 			<div className={ cn("container") }>
-				<AwesomeTypo debug={ debug }>
+				<AwesomeTypo debug={ debug } enabled={ awesomeTypeActive }>
 					<h1>
 						Web typo&shy;graphy on steroids ....... !
 					</h1>

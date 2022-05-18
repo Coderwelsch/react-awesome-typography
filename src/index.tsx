@@ -23,11 +23,17 @@ const ReactAwesomeTypography: FC<AwesomeTypographyProps> = ({
 	debug,
 	...props
 }) => {
+	if (!enabled) {
+		return (
+			<>
+				{ children }
+			</>
+		)
+	}
+
 	const childrenArray = Children.toArray(children)
 
 	const transformedChildren = React.useMemo(() => {
-		console.log("RENDER")
-
 		return childrenArray.map((child, index) =>
 			transformChild({
 				child,
