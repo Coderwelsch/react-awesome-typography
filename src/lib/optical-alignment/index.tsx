@@ -11,6 +11,7 @@ export interface DebugOptions {
 
 export interface OpticalAlignmentNodesProps {
 	fixedText: string,
+	debug?: boolean | DebugOptions
 }
 
 export interface NodeProps {
@@ -20,11 +21,8 @@ export interface NodeProps {
 	isLastWord: boolean
 }
 
-export const NodeMemoized = React.memo(Node, (prev, next) => {
-	return (prev.text === next.text)
-})
-
 export enum DebugNodeState {
+	NONE = "none",
 	IDLE = "idle",
 	ACTIVE = "active",
 }
@@ -38,7 +36,7 @@ const DEFAULT_DEBUG_STYLES: DebugOptions = {
 	}
 }
 
-export const applyDebugStyles = (element: HTMLSpanElement, debugOptions: true | DebugOptions, state: DebugNodeState) => {
+export const applyDebugStyles = (element: HTMLSpanElement, debugOptions: undefined | boolean | DebugOptions, state: DebugNodeState) => {
 	let style: CSSProperties
 	let _debugOptions: DebugOptions = { ...DEFAULT_DEBUG_STYLES }
 
@@ -54,9 +52,11 @@ export const applyDebugStyles = (element: HTMLSpanElement, debugOptions: true | 
 		case DebugNodeState.IDLE:
 			style = _debugOptions.idleStyle
 			break
+		case DebugNodeState.NONE:
+			style = {
+				backgroundColor: ""
+			}
 	}
-
-	console.log(element, state, style)
 
 	Object.entries(style).map(([key, value]) => {
 		// @ts-ignore
@@ -96,14 +96,18 @@ export function Node ({
 
 				if (debug) {
 					applyDebugStyles(spanRef.current, debug, DebugNodeState.ACTIVE)
+				} else {
+					applyDebugStyles(spanRef.current, debug, DebugNodeState.NONE)
 				}
 			} else {
 				if (debug) {
 					applyDebugStyles(spanRef.current, debug, DebugNodeState.IDLE)
+				} else {
+					applyDebugStyles(spanRef.current, debug, DebugNodeState.NONE)
 				}
 			}
 		}
-	}, [containerSize])
+	}, [containerSize, text, debug])
 
 	useEffect(() => {
 		window.addEventListener("resize", handleResize)
@@ -124,7 +128,10 @@ export function Node ({
 	)
 }
 
-export function OpticalAlignmentNodes ({ fixedText }: OpticalAlignmentNodesProps) : JSX.Element {
+export function OpticalAlignmentNodes ({
+	fixedText,
+	debug
+}: OpticalAlignmentNodesProps) : JSX.Element {
 	const split: string[] = fixedText.split(" ")
 	const transformed = split.map((part, index) => {
 		const isLast = index === split.length - 1
@@ -138,11 +145,11 @@ export function OpticalAlignmentNodes ({ fixedText }: OpticalAlignmentNodesProps
 			if (test.test(part)) {
 				return (
 					<Node
-						debug={ true }
 						key={ `${ index }-${ part }-${ id }` }
 						text={ part }
 						isLastWord={ isLast }
 						rule={ rule }
+						debug={ debug }
 					/>
 				)
 			}

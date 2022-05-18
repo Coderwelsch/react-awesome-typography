@@ -2,6 +2,7 @@ import React, { Children, FC, ReactNode } from "react"
 
 import { transformChild } from "./lib"
 import Rules from "./lib/grammar/rules"
+import { DebugOptions } from "./lib/optical-alignment"
 import { GrammarRules } from "./types"
 
 
@@ -10,6 +11,7 @@ export interface AwesomeTypographyProps {
 	children?: ReactNode,
 	rules?: GrammarRules,
 	opticalAlignment?: boolean,
+	debug?: boolean | DebugOptions
 	className?: string
 }
 
@@ -18,20 +20,24 @@ const ReactAwesomeTypography: FC<AwesomeTypographyProps> = ({
 	children,
 	rules = Rules,
 	opticalAlignment = true,
+	debug,
 	...props
 }) => {
 	const childrenArray = Children.toArray(children)
 
 	const transformedChildren = React.useMemo(() => {
+		console.log("RENDER")
+
 		return childrenArray.map((child, index) =>
 			transformChild({
 				child,
 				index,
 				grammarRules: rules,
 				opticalAlignment,
+				debug
 			}),
 		)
-	}, [ children ])
+	}, [ children, debug ])
 
 	if (!opticalAlignment) {
 		return (

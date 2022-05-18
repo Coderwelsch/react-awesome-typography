@@ -2,7 +2,7 @@ import React, { Children, cloneElement, ReactElement, ReactNode } from "react"
 
 import { GrammarRules } from "../types"
 import { fixGrammar } from "./grammar"
-import { OpticalAlignmentNodes } from "./optical-alignment"
+import { DebugOptions, OpticalAlignmentNodes } from "./optical-alignment"
 
 
 const hasChildren = (
@@ -30,14 +30,16 @@ export interface TransformChildProps {
 	child: React.ReactNode,
 	index: number,
 	grammarRules: GrammarRules,
-	opticalAlignment: boolean
+	opticalAlignment: boolean,
+	debug?: boolean | DebugOptions
 }
 
 export const transformChild = ({
 	child,
 	index,
 	grammarRules,
-	opticalAlignment = true
+	opticalAlignment = true,
+	debug,
 }: TransformChildProps): ReactNode => {
 	// filter: undefined, null, 0, empty strings
 	if (!child) {
@@ -52,6 +54,7 @@ export const transformChild = ({
 				<OpticalAlignmentNodes
 					key={ index }
 					fixedText={ fixedText }
+					debug={ debug }
 				/>
 			)
 		}
@@ -72,6 +75,7 @@ export const transformChild = ({
 				modifiedChildren = (
 					<OpticalAlignmentNodes
 						fixedText={ fixedText }
+						debug={ debug }
 					/>
 				)
 			} else {
@@ -83,7 +87,8 @@ export const transformChild = ({
 					child,
 					index,
 					grammarRules,
-					opticalAlignment
+					opticalAlignment,
+					debug
 				}),
 			)
 		}

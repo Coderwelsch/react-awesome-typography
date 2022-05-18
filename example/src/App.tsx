@@ -36,7 +36,7 @@ function App () {
 			<hr />
 
 			<div className={ cn("container") }>
-				<AwesomeTypo>
+				<AwesomeTypo debug={ debug }>
 					<h1>
 						Web typo&shy;graphy on steroids ....... !
 					</h1>
