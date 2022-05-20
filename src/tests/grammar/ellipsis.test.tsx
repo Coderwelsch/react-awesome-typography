@@ -3,18 +3,12 @@ import { cleanup, render } from "@testing-library/react"
 import React, { FC } from "react"
 
 import RAT, { AwesomeTypographyProps } from "../../index"
+import { NoOpticalAlign } from "./base.test"
 
 
 afterEach(() => {
 	cleanup()
 })
-
-const NoOpticalAlign:FC<AwesomeTypographyProps> = (props) => (
-	<RAT
-		{ ...props }
-		opticalAlignment={ false }
-	/>
-)
 
 describe("replaces wrong ellipses", () => {
 	it("... to …", function () {

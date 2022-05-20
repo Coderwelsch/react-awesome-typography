@@ -1,8 +1,8 @@
 import React, { Children, cloneElement, ReactElement, ReactNode } from "react"
 
-import { GrammarRules } from "../types"
+import { TransformChildProps } from "../types"
 import { fixGrammar } from "./grammar"
-import { DebugOptions, OpticalAlignmentNodes } from "./optical-alignment"
+import { OpticalAlignmentNodes } from "./optical-alignment/nodes"
 
 
 const hasChildren = (
@@ -19,19 +19,7 @@ const hasChildren = (
 	}
 
 	// @ts-ignore
-	if (element?.props?.children?.length) {
-		return true
-	}
-
-	return false
-}
-
-export interface TransformChildProps {
-	child: React.ReactNode,
-	index: number,
-	grammarRules: GrammarRules,
-	opticalAlignment: boolean,
-	debug?: boolean | DebugOptions
+	return !!element?.props?.children?.length;
 }
 
 export const transformChild = ({
@@ -98,8 +86,6 @@ export const transformChild = ({
 			elem.props,
 			modifiedChildren,
 		)
-	} else {
-		// console.log("No children nor content found for", child)
 	}
 
 	return child

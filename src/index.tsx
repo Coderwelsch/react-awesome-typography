@@ -2,8 +2,7 @@ import React, { Children, FC, ReactNode } from "react"
 
 import { transformChild } from "./lib"
 import Rules from "./lib/grammar/rules"
-import { DebugOptions } from "./lib/optical-alignment"
-import { GrammarRules } from "./types"
+import { DebugOptions, GrammarRules } from "./types"
 
 
 export interface AwesomeTypographyProps {
@@ -45,18 +44,10 @@ const ReactAwesomeTypography: FC<AwesomeTypographyProps> = ({
 		)
 	}, [ children, debug ])
 
-	if (!opticalAlignment) {
-		return (
-			<>{ transformedChildren }</>
-		)
-	}
-
 	return (
-		<div
-			{ ...props }
-		>
+		<>
 			{ transformedChildren }
-		</div>
+		</>
 	)
 }
 

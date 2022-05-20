@@ -9,7 +9,7 @@ afterEach(() => {
 	cleanup()
 })
 
-const NoOpticalAlign:FC<AwesomeTypographyProps> = (props) => (
+export const NoOpticalAlign:FC<AwesomeTypographyProps> = (props) => (
 	<RAT
 		{ ...props }
 		opticalAlignment={ false }
@@ -34,11 +34,11 @@ describe("replaces grammar problems", () => {
 	it("don’t removes elements without children", function () {
 		const { container } = render(
 			<NoOpticalAlign>
-				<h1>You are ... beauti...... to meeeee!</h1>
+				<h1>You are so ... beauti...... to meeeee!</h1>
 				<br/>
 			</NoOpticalAlign>
 		)
-		expect(container.innerHTML).toBe("<h1>You are … beauti… to meeeee!</h1><br>")
+		expect(container.innerHTML).toBe("<h1>You are so … beauti… to meeeee!</h1><br>")
 	})
 
 	it("don’t removes nested elements without children", function () {
