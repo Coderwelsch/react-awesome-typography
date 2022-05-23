@@ -26,7 +26,8 @@ export const transformChild = ({
 	child,
 	index,
 	grammarRules,
-	opticalAlignment = true,
+	enableOpticalAlignment = true,
+	opticalAlignmentRules,
 	debug,
 }: TransformChildProps): ReactNode => {
 	// filter: undefined, null, 0, empty strings
@@ -37,7 +38,7 @@ export const transformChild = ({
 	if (typeof child === "string") {
 		const fixedText = fixGrammar(child, grammarRules)
 
-		if (opticalAlignment) {
+		if (enableOpticalAlignment) {
 			return (
 				<OpticalAlignmentNodes
 					key={ index }
@@ -59,7 +60,7 @@ export const transformChild = ({
 		if (typeof children === "string") {
 			const fixedText: string = fixGrammar(children, grammarRules)
 
-			if (opticalAlignment) {
+			if (enableOpticalAlignment) {
 				modifiedChildren = (
 					<OpticalAlignmentNodes
 						fixedText={ fixedText }
@@ -75,7 +76,8 @@ export const transformChild = ({
 					child,
 					index,
 					grammarRules,
-					opticalAlignment,
+					enableOpticalAlignment,
+					opticalAlignmentRules,
 					debug
 				}),
 			)

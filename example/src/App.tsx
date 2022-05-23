@@ -1,57 +1,32 @@
+import { CssBaseline, Grid, ThemeProvider } from "@mui/material"
 import React, { useState } from "react"
-import AwesomeTypo from "react-awesome-typography"
 
-import "./index.css"
+import "./App.scss"
+
+import AwesomeWrapper from "./components/AwtWrapper/AwtWrapper"
+import { Sidebar } from "./components/Sidebar/Sidebar"
+import SettingsContext, { INITIAL_SETTINGS_CONTEXT, SettingsContextProps } from "./context/Setttings"
+import { darkTheme } from "./theme/dark-theme"
 
 
-function cn (...classNames: any[]): string {
+export function cn (...classNames: any[]): string {
 	return classNames.filter((c) => typeof c === "string").join(" ")
 }
 
 function App () {
-	const [ awesomeTypeActive, setAwesomeTypeActive ] = useState(true)
-	const [ debug, setDebug ] = useState(true)
+	const [ settingsState, setSettings ] = useState<SettingsContextProps>(INITIAL_SETTINGS_CONTEXT)
 
 	return (
-		<section className={ cn(debug && "debug-active") }>
-			<button
-				className={ cn(awesomeTypeActive && "enabled") }
-				onClick={ () => {
-					setDebug(!awesomeTypeActive)
-					setAwesomeTypeActive(!awesomeTypeActive)
-				} }
-			>
-				{ awesomeTypeActive
-					? `✔︎ Awesome Type enabled`
-					: `✘︎ Awesome Type disabled` }
-			</button>
+		<ThemeProvider theme={ darkTheme }>
+			<CssBaseline />
 
-			<button
-				className={ cn(debug && "enabled") }
-				onClick={ () => setDebug(!debug) }
-			>
-				{ debug ? `✔︎ Debug enabled` : `✘︎ Debug disabled` }
-			</button>
-
-			<hr />
-
-			<div className={ cn("container") }>
-				<AwesomeTypo debug={ debug } enabled={ awesomeTypeActive }>
-					<h1>
-						Web typo&shy;graphy on steroids ....... !
-					</h1>
-
-					<p>
-						"This react component transforms your copy text into awesome text,
-						everyone wants to read ................. "
-						<br />
-						<br />
-						<i>You can define your own rules to optical align words (on left text column side),</i> fix misspellings and typographical issues like wrong
-						typed ellipses: ..............................
-					</p>
-				</AwesomeTypo>
-			</div>
-		</section>
+			<SettingsContext.Provider value={ [ settingsState, setSettings ] }>
+				<Grid container spacing={ 2 }>
+					<AwesomeWrapper />
+					<Sidebar />
+				</Grid>
+			</SettingsContext.Provider>
+		</ThemeProvider>
 	)
 }
 

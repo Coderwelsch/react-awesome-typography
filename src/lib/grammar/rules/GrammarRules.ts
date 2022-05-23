@@ -1,7 +1,7 @@
 import { GrammarRules } from "../../../types"
 
 
-const rules: GrammarRules = [
+const Rules: GrammarRules = [
 	{
 		description: "replace wrong quotes with good ol’ french ones",
 		test: /(["'`’])((?:[^\n]|(?!\1))+)(\1)/gi,
@@ -24,4 +24,4 @@ const rules: GrammarRules = [
 	},
 ]
 
-export default rules
+export default Rules

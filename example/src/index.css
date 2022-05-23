@@ -1,3 +1,13 @@
+:root {
+	--color-frame-border: rgba(161, 168, 255, 0.2);
+
+	--spacing-xl: 6rem;
+	--spacing-lg: 2rem;
+	--spacing-md: 1.75rem;
+	--spacing-sm: 0.75rem;
+	--spacing-xs: 0.25rem;
+}
+
 html,
 body {
 	width: 100%;
@@ -10,28 +20,17 @@ body {
 	align-items: flex-start;
 	justify-content: center;
 
-	font-family: Georgia, serif;
 	line-height: 1.5;
-	font-size: 1.25rem;
-	color: #d1d1d1;
+	font-size: 1.2rem;
 
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 
-	background: rgb(34, 34, 34);
+	background: #18191a;
 }
 
-section {
-	width: 100%;
-	max-width: 50rem;
-
-	padding: 2rem;
-	margin: 0 auto;
-	box-sizing: border-box;
-}
-
-section.debug-active .container {
-	border-left-color: hsla(312, 98%, 55%, 0.75);
+p {
+	letter-spacing: 0.02rem;
 }
 
 hr {
@@ -39,7 +38,13 @@ hr {
 }
 
 .container {
+	margin: var(--spacing-sm) var(--spacing-xl);
+
 	border-left: 1px dashed transparent;
+}
+
+.container.debug-active {
+	border-left-color: hsla(312, 98%, 55%, 0.75);
 }
 
 button {
@@ -64,9 +69,4 @@ button:not(:first-child) {
 
 button.enabled {
 	background: #32b85a;
-}
-
-.rule-ellipsis {
-	color: blue;
-	background: green !important;
 }

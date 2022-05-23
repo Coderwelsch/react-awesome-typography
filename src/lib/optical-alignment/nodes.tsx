@@ -20,13 +20,13 @@ export function Node ({
 		}
 	}
 
-	const applyDebug = (spanRef: RefObject<HTMLSpanElement>) => {
+	const applyDebug = (spanRef: RefObject<HTMLSpanElement>, state: DebugNodeState) => {
 		if (!spanRef.current) {
 			return
 		}
 
 		if (debug) {
-			applyDebugStyles(spanRef.current, debug, DebugNodeState.ACTIVE)
+			applyDebugStyles(spanRef.current, debug, state)
 		} else {
 			applyDebugStyles(spanRef.current, debug, DebugNodeState.NONE)
 		}
@@ -45,9 +45,11 @@ export function Node ({
 				} else if (rule.className === "string") {
 					spanRef.current.classList.add(rule.className)
 				}
-			}
 
-			applyDebug(spanRef)
+				applyDebug(spanRef, DebugNodeState.ACTIVE)
+			} else {
+				applyDebug(spanRef, DebugNodeState.IDLE)
+			}
 		}
 	}, [ containerSize, text, debug ])
 

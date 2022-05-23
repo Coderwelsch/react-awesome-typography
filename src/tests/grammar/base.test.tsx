@@ -2,7 +2,8 @@ import "@testing-library/jest-dom"
 import { cleanup, render } from "@testing-library/react"
 import React, { FC } from "react"
 
-import RAT, { AwesomeTypographyProps } from "../../index"
+import RAT from "../../index"
+import { AwesomeTypographyProps } from "../../types"
 
 
 afterEach(() => {
@@ -12,7 +13,7 @@ afterEach(() => {
 export const NoOpticalAlign:FC<AwesomeTypographyProps> = (props) => (
 	<RAT
 		{ ...props }
-		opticalAlignment={ false }
+		enableOpticalAlignment={ false }
 	/>
 )
 

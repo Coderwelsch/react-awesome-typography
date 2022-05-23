@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react"
+import React, { CSSProperties, ReactNode } from "react"
 
 
 export interface GrammarRule {
@@ -60,6 +60,18 @@ export interface TransformChildProps {
 	child: React.ReactNode,
 	index: number,
 	grammarRules: GrammarRules,
-	opticalAlignment: boolean,
+	enableOpticalAlignment: boolean,
+	opticalAlignmentRules: AlignmentRule[]
 	debug?: boolean | DebugOptions
+}
+
+
+export interface AwesomeTypographyProps {
+	enabled?: boolean,
+	children?: ReactNode,
+	grammarRules?: GrammarRules,
+	enableOpticalAlignment?: boolean,
+	opticalAlignmentRules?: AlignmentRule[],
+	debug?: boolean | DebugOptions
+	className?: string
 }

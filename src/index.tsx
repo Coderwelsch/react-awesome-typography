@@ -1,24 +1,17 @@
-import React, { Children, FC, ReactNode } from "react"
+import React, { Children, FC } from "react"
 
 import { transformChild } from "./lib"
-import Rules from "./lib/grammar/rules"
-import { DebugOptions, GrammarRules } from "./types"
+import gRules from "./lib/grammar/rules/GrammarRules"
+import alignmentRules from "./lib/optical-alignment/rules"
+import { AwesomeTypographyProps } from "./types"
 
-
-export interface AwesomeTypographyProps {
-	enabled?: boolean,
-	children?: ReactNode,
-	rules?: GrammarRules,
-	opticalAlignment?: boolean,
-	debug?: boolean | DebugOptions
-	className?: string
-}
 
 const ReactAwesomeTypography: FC<AwesomeTypographyProps> = ({
 	enabled = true,
 	children,
-	rules = Rules,
-	opticalAlignment = true,
+	grammarRules = gRules,
+	enableOpticalAlignment = true,
+	opticalAlignmentRules = alignmentRules,
 	debug,
 	...props
 }) => {
@@ -37,12 +30,13 @@ const ReactAwesomeTypography: FC<AwesomeTypographyProps> = ({
 			transformChild({
 				child,
 				index,
-				grammarRules: rules,
-				opticalAlignment,
+				grammarRules,
+				enableOpticalAlignment,
+				opticalAlignmentRules,
 				debug
 			}),
 		)
-	}, [ children, debug ])
+	}, [ children, debug, opticalAlignmentRules, grammarRules ])
 
 	return (
 		<>
