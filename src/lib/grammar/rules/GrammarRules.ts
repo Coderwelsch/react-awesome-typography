@@ -4,7 +4,7 @@ import { GrammarRules } from "../../../types"
 const Rules: GrammarRules = [
 	{
 		description: "replace wrong quotes with good ol’ french ones",
-		test: /(["'`’])((?:[^\n]|(?!\1))+)(\1)/gi,
+		test: /(["'])((?:[^\n]|(?!\1))+)(\1)/gi,
 		replace: "«$2»",
 	},
 	{
