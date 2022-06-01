@@ -13,7 +13,6 @@ const ReactAwesomeTypography: FC<AwesomeTypographyProps> = ({
 	enableOpticalAlignment = true,
 	opticalAlignmentRules = alignmentRules,
 	debug,
-	...props
 }) => {
 	if (!enabled) {
 		return (
@@ -37,6 +36,17 @@ const ReactAwesomeTypography: FC<AwesomeTypographyProps> = ({
 			}),
 		)
 	}, [ children, debug, opticalAlignmentRules, grammarRules ])
+
+	// const transformedChildren = childrenArray.map((child, index) =>
+	// 	transformChild({
+	// 		child,
+	// 		index,
+	// 		grammarRules,
+	// 		enableOpticalAlignment,
+	// 		opticalAlignmentRules,
+	// 		debug,
+	// 	}),
+	// )
 
 	return (
 		<>

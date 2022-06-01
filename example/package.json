@@ -8,6 +8,7 @@
     "@mui/icons-material": "^5.8.0",
     "@mui/material": "^5.8.0",
     "@mui/x-data-grid": "^5.11.1",
+    "@mui/x-data-grid-pro": "^5.11.1",
     "@types/jest": "^27.5.1",
     "@types/node": "^17.0.33",
     "@types/react": "^18.0.9",

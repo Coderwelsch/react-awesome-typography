@@ -1,128 +1,94 @@
-import { FlashlightOnTwoTone, PlayCircle } from "@mui/icons-material"
-import { Box, Checkbox, Divider, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack } from "@mui/material"
-import React, { ReactNode, useContext } from "react"
-import { AwesomeTypographyProps } from "react-awesome-typography/lib/types"
-
-import SettingsContext from "../../context/Setttings"
-import SettingsGrid from "../SettingsGrid/SettingsGrid"
-
-
-export interface SettingListElementProps {
-	property: keyof AwesomeTypographyProps,
-	label: string,
-	icon?: ReactNode,
-	isLast?: boolean
-}
+import { Autocomplete, Grid, Paper, Stack, TextField } from "@mui/material"
+import React, { useEffect, useState } from "react"
+import TeaserSrc from "../../assets/logo-teaser.svg"
+import GrammarSettings from "../GrammarSettings/GrammarSettings"
+import OASettings from "../OASettings/OASettings"
+import { SettingListElement } from "./ListElement"
+import { SettingsSection } from "./Section"
 
 
-export function SettingListElement ({
-	property,
-	label,
-	icon,
-	isLast
-}: SettingListElementProps) {
-	const [ settings, setSettings ] = useContext(SettingsContext)
-	const { enabled } = settings.awtProps
-	const isDisabled = property === "enabled" ? false : !enabled
-
-	const value = settings.awtProps[property]
-
-	if (property === null || property === undefined) {
-		return null
-	}
-
-	const _setSetting = (key: keyof AwesomeTypographyProps, value: any) => {
-		const newSettings = { ...settings }
-
-		if (newSettings.awtProps[key] !== undefined) {
-			newSettings.awtProps[key] = value
-		}
-
-		setSettings(newSettings)
-	}
-
-	const handleChange = () => {
-		_setSetting(property, !value)
-		_setSetting(property, !value)
-	}
-
-	return (
-		<>
-			<ListItem
-				disablePadding
-				secondaryAction={
-					<Checkbox
-						edge={ "start" }
-						checked={ !!value }
-						onChange={ handleChange }
-						disabled={ isDisabled }
-						tabIndex={ -1 }
-						inputProps={ { "aria-labelledby": property.toString() } }
-					/>
-				}
-			>
-				<ListItemButton
-					role={ undefined }
-					disabled={ isDisabled }
-					onClick={ handleChange }
-					dense
-				>
-					{ icon &&
-						<ListItemIcon>
-							{ icon }
-						</ListItemIcon>
-					}
-
-					<ListItemText
-						id={ property }
-						primary={ label }
-					/>
-				</ListItemButton>
-			</ListItem>
-
-			{ !isLast &&
-				<Divider />
-			}
-		</>
-	)
-}
+export const Teaser = () =>
+	<Paper
+		sx={ {
+			p: 4,
+			pl: 4,
+			pb: 3,
+			borderRadius: 0,
+			borderBottom: "1px solid rgba(255,255,255,0.1)",
+			position: "sticky",
+			top: 0,
+			zIndex: 2,
+		} }
+	>
+		<img src={ TeaserSrc } alt={ "Awesome Typography – The Config Editor" } />
+	</Paper>
 
 export function Sidebar<FC> () {
+	const [ fontOptions, setFontOptions ] = useState([
+		{ label: "Waiting …" },
+	])
+
+	const loadFonts = async () => {
+		const result = await fetch(`https://www.googleapis.com/webfonts/v1/webfonts?key=${ process.env.REACT_APP_GOOGLE_API_KEY }`, {})
+		const data = await result.json()
+
+		console.log(data.items)
+
+		setFontOptions(data.items.map((family: any) => ({
+			label: family.family,
+		})))
+	}
+
+	useEffect(() => {
+		loadFonts()
+	}, [])
+
 	return (
 		<Grid
 			item
 			xs={ 4 }
-			sx={ {
-				backgroundColor: "#243843",
-			} }
+			m={ 0 }
 			className={ "sidebar" }
 		>
-			<Stack spacing={ 6 } m={ 3 } mt={ 5 }>
-				<Stack spacing={ 2 }>
-					<Divider>Base Options</Divider>
+			<Teaser />
 
-					<List>
-						<SettingListElement
-							property={ "enabled" }
-							label={ "Enable RAWT" }
-							icon={ <PlayCircle fontSize={ "small" } /> }
-						/>
+			<Stack>
+				<SettingsSection title={ "Base Options" }>
+					<SettingListElement
+						property={ "enabled" }
+						label={ "Enable RAWT" }
+					/>
 
-						<SettingListElement
-							property={ "debug" }
-							label={ "Debug Mode" }
-							icon={ <FlashlightOnTwoTone fontSize={ "small" } /> }
-							isLast={ true }
-						/>
-					</List>
-				</Stack>
+					<SettingListElement
+						property={ "debug" }
+						label={ "Debug Mode" }
+						isLast={ true }
+					/>
+				</SettingsSection>
 
-				<Box m={ 2 }>
-					<Stack spacing={ 3 }>
-						<Divider>Optical Alignment</Divider>
-						<SettingsGrid/>
-					</Stack>
-				</Box>
+				<SettingsSection title={ "Styles" }>
+					<Autocomplete
+						disablePortal
+						id="combo-box-demo"
+						options={ fontOptions }
+						fullWidth={ true }
+						sx={ { fontFamily: "monospace" } }
+						renderInput={ (params) =>
+							<TextField
+								{ ...params }
+								label="Font Family"
+							/>
+						}
+					/>
+				</SettingsSection>
+
+				<SettingsSection title={ "Grammar Correction" }>
+					<GrammarSettings />
+				</SettingsSection>
+
+				<SettingsSection title={ "Optical Alignment" }>
+					<OASettings />
+				</SettingsSection>
 
 			</Stack>
 		</Grid>

@@ -44,6 +44,7 @@ export const transformChild = ({
 					key={ index }
 					fixedText={ fixedText }
 					debug={ debug }
+					opticalAlignmentRules={ opticalAlignmentRules }
 				/>
 			)
 		}
@@ -65,6 +66,7 @@ export const transformChild = ({
 					<OpticalAlignmentNodes
 						fixedText={ fixedText }
 						debug={ debug }
+						opticalAlignmentRules={ opticalAlignmentRules }
 					/>
 				)
 			} else {

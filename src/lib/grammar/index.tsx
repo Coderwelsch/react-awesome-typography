@@ -10,11 +10,15 @@ export function fixGrammar (text: string, rules: GrammarRules) {
 			replace,
 		} = rule
 
-		const globalTest = new RegExp(test, "gmu")
+		try	{
+			const globalTest = new RegExp(test, "gmu")
 
-		// TODO: idk, but typescript won’t allow functions as replace param
-		// @ts-ignore
-		_text = _text.replaceAll(globalTest, replace)
+			// TODO: idk, but typescript won’t allow functions as replace param
+			// @ts-ignore
+			_text = _text.replaceAll(globalTest, replace)
+		} catch (e) {
+			console.error(`Couldn’t parse regular expression «${ test }»`, e)
+		}
 	}
 
 	return _text

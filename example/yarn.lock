@@ -1665,7 +1665,21 @@
     prop-types "^15.8.1"
     react-is "^17.0.2"
 
-"@mui/x-data-grid@^5.11.1":
+"@mui/x-data-grid-pro@^5.11.1":
+  version "5.11.1"
+  resolved "https://registry.yarnpkg.com/@mui/x-data-grid-pro/-/x-data-grid-pro-5.11.1.tgz#c306dc692a56b33e9fff4bfde1b42d161c0c5c6b"
+  integrity sha512-z6SkZ72NyGys3KKz5oGSnlnF+kWqtxqC3eppfB8d5ajqFTUmKRPj0L4sqg4JR1/zCt6HTQ1wxviA5DQjSPj1/g==
+  dependencies:
+    "@babel/runtime" "^7.17.2"
+    "@mui/utils" "^5.7.0"
+    "@mui/x-data-grid" "5.11.1"
+    "@mui/x-license-pro" "5.11.1"
+    "@types/format-util" "^1.0.2"
+    clsx "^1.0.4"
+    prop-types "^15.8.1"
+    reselect "^4.1.5"
+
+"@mui/x-data-grid@5.11.1", "@mui/x-data-grid@^5.11.1":
   version "5.11.1"
   resolved "https://registry.yarnpkg.com/@mui/x-data-grid/-/x-data-grid-5.11.1.tgz#4780d76fd41e11f1e45935327e931313b47c3158"
   integrity sha512-Iwm3gmHciZrYsmAOrX1W2JKo2CexgGhdG7ZXvHh1rW3OD66ITSoFilThPtrb88Eg1fZI/goDWnPr6R7JXLHc5Q==
@@ -1675,6 +1689,16 @@
     clsx "^1.1.1"
     prop-types "^15.8.1"
     reselect "^4.1.5"
+
+"@mui/x-license-pro@5.11.1":
+  version "5.11.1"
+  resolved "https://registry.yarnpkg.com/@mui/x-license-pro/-/x-license-pro-5.11.1.tgz#726d910d879be9f2ed25bd256b475f45e0d0f3c5"
+  integrity sha512-DXhliU0kJQNanD2Qn8oCDrHtC3vK68DoYspu7PTo9oq8ceRifOyZkeNoUEGoaZPYFbkqr7jG3PE+mz05uiMdvA==
+  dependencies:
+    "@babel/runtime" "^7.17.2"
+    "@mui/utils" "^5.7.0"
+    esm "^3.2.25"
+    yargs "^17.5.1"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -2028,6 +2052,11 @@
     "@types/express-serve-static-core" "^4.17.18"
     "@types/qs" "*"
     "@types/serve-static" "*"
+
+"@types/format-util@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@types/format-util/-/format-util-1.0.2.tgz#7d19feb1caf59b6ea99c83dfe795ffa3f06b87d7"
+  integrity sha512-9SrLCpgzWo2yHHhiMOX0WwgDh37nSbDbWUsRc1ss++o8O97E3tB6SJiyUQM21UeUsKvZNuhDCmkRaINZ4uJAfg==
 
 "@types/graceful-fs@^4.1.2":
   version "4.1.5"
@@ -3172,7 +3201,7 @@ cliui@^7.0.2:
     strip-ansi "^6.0.0"
     wrap-ansi "^7.0.0"
 
-clsx@^1.1.1:
+clsx@^1.0.4, clsx@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
   integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
@@ -4242,6 +4271,11 @@ eslint@^8.3.0:
     strip-json-comments "^3.1.0"
     text-table "^0.2.0"
     v8-compile-cache "^2.0.3"
+
+esm@^3.2.25:
+  version "3.2.25"
+  resolved "https://registry.yarnpkg.com/esm/-/esm-3.2.25.tgz#342c18c29d56157688ba5ce31f8431fbb795cc10"
+  integrity sha512-U1suiZ2oDVWv4zPO56S0NcR5QriEahGtdN2OR6FiOG4WJvcjBVFB0qI4+eKoWFH483PKGuLuu6V8Z4T5g63UVA==
 
 espree@^9.3.2:
   version "9.3.2"
@@ -8123,7 +8157,7 @@ string-natural-compare@^3.0.1:
   resolved "https://registry.yarnpkg.com/string-natural-compare/-/string-natural-compare-3.0.1.tgz#7a42d58474454963759e8e8b7ae63d71c1e7fdf4"
   integrity sha512-n3sPwynL1nwKi3WJ6AIsClwBMa0zTi54fn2oLU6ndfTSIO05xaznjSf15PcBZU6FNWbmN5Q6cxT4V5hGvB4taw==
 
-string-width@^4.1.0, string-width@^4.2.0:
+string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -9206,6 +9240,11 @@ yargs-parser@^20.2.2:
   resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-20.2.9.tgz#2eb7dc3b0289718fc295f362753845c41a0c94ee"
   integrity sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==
 
+yargs-parser@^21.0.0:
+  version "21.0.1"
+  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-21.0.1.tgz#0267f286c877a4f0f728fceb6f8a3e4cb95c6e35"
+  integrity sha512-9BK1jFpLzJROCI5TzwZL/TU4gqjK5xiHV/RfWLOahrjAko/e4DJkRDZQXfvqAsiZzzYhgAzbgz6lg48jcm4GLg==
+
 yargs@^16.2.0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-16.2.0.tgz#1c82bf0f6b6a66eafce7ef30e376f49a12477f66"
@@ -9218,6 +9257,19 @@ yargs@^16.2.0:
     string-width "^4.2.0"
     y18n "^5.0.5"
     yargs-parser "^20.2.2"
+
+yargs@^17.5.1:
+  version "17.5.1"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-17.5.1.tgz#e109900cab6fcb7fd44b1d8249166feb0b36e58e"
+  integrity sha512-t6YAJcxDkNX7NFYiVtKvWUz8l+PaKTLiL63mJYWR2GnHq2gjEWISzsLp9wg3aY36dY1j+gfIEL3pIF+XlJJfbA==
+  dependencies:
+    cliui "^7.0.2"
+    escalade "^3.1.1"
+    get-caller-file "^2.0.5"
+    require-directory "^2.1.1"
+    string-width "^4.2.3"
+    y18n "^5.0.5"
+    yargs-parser "^21.0.0"
 
 yocto-queue@^0.1.0:
   version "0.1.0"

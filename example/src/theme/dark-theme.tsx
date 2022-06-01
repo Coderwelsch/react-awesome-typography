@@ -1,18 +1,18 @@
 import { createTheme } from "@mui/material"
 
 
-const uiFont = [
-	'-apple-system',
-	'BlinkMacSystemFont',
-	'"Segoe UI"',
-	'Roboto',
-	'"Helvetica Neue"',
-	'Arial',
-	'sans-serif',
-	'"Apple Color Emoji"',
-	'"Segoe UI Emoji"',
-	'"Segoe UI Symbol"',
-].join(',')
+export const UiFont = [
+	"-apple-system",
+	"BlinkMacSystemFont",
+	"\"Segoe UI\"",
+	"Roboto",
+	"\"Helvetica Neue\"",
+	"Arial",
+	"sans-serif",
+	"\"Apple Color Emoji\"",
+	"\"Segoe UI Emoji\"",
+	"\"Segoe UI Symbol\"",
+].join(",")
 
 export const darkTheme = createTheme({
 	typography: {
@@ -25,36 +25,54 @@ export const darkTheme = createTheme({
 			textTransform: "none",
 		},
 		caption: {
-			fontFamily: uiFont
+			fontFamily: UiFont,
 		},
 		subtitle1: {
-			fontFamily: uiFont
+			fontFamily: UiFont,
 		},
 		subtitle2: {
-			fontFamily: uiFont
-		}
+			fontFamily: UiFont,
+		},
 	},
 	components: {
 		MuiDivider: {
 			defaultProps: {
 				sx: {
-					color: "hsl(203,30%,55%)",
+					color: "rgba(255, 255, 255, 0.3)",
 					fontSize: "0.65rem",
-					letterSpacing: "0.01rem",
+					letterSpacing: "0.03rem",
 					textTransform: "uppercase",
-					fontFamily: uiFont,
+					fontFamily: UiFont,
+				},
+			},
+		},
+		MuiPaper: {
+			defaultProps: {
+				elevation: 0,
+			},
+		},
+		MuiAutocomplete: {
+			defaultProps: {
+				sx: {
+					"input::placeholder": {
+						fontFamily: UiFont,
+					}
 				}
 			}
 		}
 	},
 	palette: {
 		mode: "dark",
+		primary: {
+			main: "#FFB793",
+		},
 		text: {
 			primary: "#b3b7b9",
 		},
 		background: {
-			default: "hsl(204, 24%, 10%)"
+			default: "#303030",
+			paper: "#373636",
 		},
-		divider: "hsla(206,30%,79%, 0.25)"
+		divider: "rgba(255, 255, 255, 0.10)",
 	},
 })

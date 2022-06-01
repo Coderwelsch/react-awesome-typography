@@ -2,7 +2,7 @@ import React, { CSSProperties, ReactNode } from "react"
 
 
 export interface GrammarRule {
-	test: RegExp,
+	test: RegExp | string,
 	replace: string | ((...args: string[]) => string),
 	description?: string
 }
@@ -27,7 +27,8 @@ export interface DebugOptions {
 
 export interface OpticalAlignmentNodesProps {
 	fixedText: string,
-	debug?: boolean | DebugOptions
+	debug?: boolean | DebugOptions,
+	opticalAlignmentRules: AlignmentRule[]
 }
 
 
