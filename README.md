@@ -1,3 +1,6 @@
+<br/>
+<br/>
+
 <p align="center">
     <img 
         src="doc/logo-teaser.svg" 
@@ -43,49 +46,49 @@ import AwesomeTypo from "react-awesome-typography";
 
 
 const replacementRules = [
-    {
-        test: /(["])([^"]+)(["])/,
-        replace: "«$2»",
-        description: "replace wrong quotes with french ones"
-    },
-    // ...
+	{
+		test: /(["])([^"]+)(["])/,
+		replace: "«$2»",
+		description: "replace wrong quotes with french ones"
+	},
+	// ...
 ];
 
 const opticalAlignmentRules = [
-    {
-        id: "W", // unique name
-        test: /W/, // regex to test if a word matches your rule 
-        offset: -0.2 // `ch` (character) units
-    }, {
-        id: "Quotes",
-        test: /[«]/,
-        className: "your-custom-classname" // works also with classNames
-    }
+	{
+		id: "W", // unique name
+		test: /W/, // regex to test if a word matches your rule 
+		offset: -0.2 // `ch` (character) units
+	}, {
+		id: "Quotes",
+		test: /[«]/,
+		className: "your-custom-classname" // works also with classNames
+	}
 ];
 
 export default () =>
-    <section className="container">
-        <h1>
-            <AwesomeTypo 
-                alignmentRules={ opticalAlignmentRules }
-                replacementRules={ replacementRules }
-                debug={ true }
-                debugOptions={ {
-	                idleBgColor: "rgba(0,200,255,0.14)",
-	                activeBgColor: "rgba(255,99,43,0.2)",
-                } }
-            >
-                Good Typography in Web Won't Exists?
-            </AwesomeTypo>
-        </h1>
-    
-        <p>
-            <AwesomeTypo alignmentRules={ opticalAlignmentRules }>
-                "Good typography for web is really hard to accomplish .............. !" 
-                But with this component, everyone can improve his/her texts without any effort. 
-            </AwesomeTypo>
-        </p>
-    </section>
+	<section className="container">
+		<h1>
+			<AwesomeTypo
+				alignmentRules={ opticalAlignmentRules }
+				replacementRules={ replacementRules }
+				debug={ true }
+				debugOptions={ {
+					idleBgColor: "rgba(0,200,255,0.14)",
+					activeBgColor: "rgba(255,99,43,0.2)",
+				} }
+			>
+				Good Typography in Web Won't Exists?
+			</AwesomeTypo>
+		</h1>
+
+		<p>
+			<AwesomeTypo alignmentRules={ opticalAlignmentRules }>
+				"Good typography for web is really hard to accomplish .............. !"
+				But with this component, everyone can improve his/her texts without any effort.
+			</AwesomeTypo>
+		</p>
+	</section>
 ```
 
 <br/>
@@ -108,28 +111,28 @@ Array of alignment rules to define the optical alignment behaviours for each wor
 
 ```javascript
 [
-    {
-        id: "W", // required – the name of that rule. Believe me, you will need it in bigger projects!
-        test: /^W/, // required – regex to test on every found word in the text
-        offset: -0.9, // required – «margin-left» adjustment value, unit: "ch" (0-character (zero) width)
-        className: undefined // optional – you can adjust words by using classes too 
-    },
-    // ...
+	{
+		id: "W", // required – the name of that rule. Believe me, you will need it in bigger projects!
+		test: /^W/, // required – regex to test on every found word in the text
+		offset: -0.9, // required – «margin-left» adjustment value, unit: "ch" (0-character (zero) width)
+		className: undefined // optional – you can adjust words by using classes too 
+	},
+	// ...
 ]    
 ```
 
 ### `replacementRules: ReplacementRule[]` • optional
 
-Rules to fix and replace misspellings by using regular expressions: 
+Rules to fix and replace misspellings by using regular expressions:
 
 ```javascript
 [
-    {
-        description: "replace wrong quotes with french ones", // required – the description of that rule. Believe me, you will need it in bigger projects!
-        test: /(["])([^"]+)(["])/, // required – regex to test on every found word in the text
-        replace: "«$2»", // required – can be string or function, see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replaceAll#description  
-    }
-    // ...
+	{
+		description: "replace wrong quotes with french ones", // required – the description of that rule. Believe me, you will need it in bigger projects!
+		test: /(["])([^"]+)(["])/, // required – regex to test on every found word in the text
+		replace: "«$2»", // required – can be string or function, see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replaceAll#description  
+	}
+	// ...
 ]    
 ```
 
@@ -149,8 +152,8 @@ blue.
 
 ```javascript
 {
-    idleBgColor: "rgba(0, 200, 255, 0.14)",
-    activeBgColor: "rgba(255, 99, 43, 0.2)"  
+	idleBgColor: "rgba(0, 200, 255, 0.14)",
+		activeBgColor: "rgba(255, 99, 43, 0.2)"  
 }
 ```
 
