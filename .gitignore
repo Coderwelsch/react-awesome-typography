@@ -1,5 +1,6 @@
 .idea
 /lib
+/dist
 
 # dependencies
 /node_modules

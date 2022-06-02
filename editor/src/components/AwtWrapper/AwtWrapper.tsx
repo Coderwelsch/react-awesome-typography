@@ -2,12 +2,12 @@ import { Grid } from "@mui/material"
 import React, { useContext } from "react"
 import ReactAwesomeTypography from "react-awesome-typography"
 
-import { cn } from "../../App"
 import SettingsContext from "../../context/Setttings"
+import { cn } from "../../helper"
 
 
 export default function AwesomeWrapper<FC> () {
-	const [ settings, setSettings ] = useContext(SettingsContext)
+	const [ settings ] = useContext(SettingsContext)
 	const { awtProps } = settings
 
 	return (
@@ -33,7 +33,7 @@ export default function AwesomeWrapper<FC> () {
 				) }
 			>
 				<ReactAwesomeTypography { ...awtProps }>
-					<h1>«To be, or not to be ........</h1>
+					<h1>"To be, or not to be ........</h1>
 
 					<p>
 						....... that is the question:

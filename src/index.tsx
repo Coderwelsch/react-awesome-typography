@@ -1,7 +1,7 @@
 import React, { Children, FC } from "react"
 
 import { transformChild } from "./lib"
-import gRules from "./lib/grammar/rules/GrammarRules"
+import gRules from "./lib/grammar/rules"
 import alignmentRules from "./lib/optical-alignment/rules"
 import { AwesomeTypographyProps } from "./types"
 

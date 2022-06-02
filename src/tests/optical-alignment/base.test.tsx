@@ -17,6 +17,6 @@ describe("Optical Alignment", () => {
 			</RAT>
 		)
 
-		expect(container.innerHTML).toBe(`<span style="margin-left: -0.1ch;">You</span> are … beauti… to meeeee!`)
+		expect(container.innerHTML).toBe(`<br style="display: none;"><span style="margin-left: -0.1ch;">You</span> are … beauti… to meeeee!`)
 	})
 })

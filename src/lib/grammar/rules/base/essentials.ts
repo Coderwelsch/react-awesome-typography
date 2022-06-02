@@ -1,12 +1,4 @@
-import { GrammarRules } from "../../../types"
-
-
-const Rules: GrammarRules = [
-	{
-		description: "replace wrong quotes with good ol’ french ones",
-		test: /(["'])((?:[^\n]|(?!\1))+)(\1)/gi,
-		replace: "«$2»",
-	},
+const essentials = [
 	{
 		description: "replace wrong apostrophes with right ones",
 		test: /(\w)[']/g,
@@ -24,4 +16,4 @@ const Rules: GrammarRules = [
 	},
 ]
 
-export default Rules
+export default essentials

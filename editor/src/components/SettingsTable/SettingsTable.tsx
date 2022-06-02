@@ -9,7 +9,7 @@ const TableStyle: SxProps = {
 	background: ""
 }
 
-export default function SettingsTable (props: SettingsTableProps) {
+export default function SettingsTable (_props: SettingsTableProps) {
 	return (
 		<Table sx={ TableStyle }>
 

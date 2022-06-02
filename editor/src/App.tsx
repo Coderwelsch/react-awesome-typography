@@ -9,23 +9,32 @@ import SettingsContext, { INITIAL_SETTINGS_CONTEXT, SettingsContextProps } from 
 import { darkTheme } from "./theme/dark-theme"
 
 
-export function cn (...classNames: any[]): string {
-	return classNames.filter((c) => typeof c === "string").join(" ")
-}
-
 function App () {
-	const [ settingsState, setSettings ] = useState<SettingsContextProps>(INITIAL_SETTINGS_CONTEXT)
+	const [
+		settingsState,
+		setSettings,
+	] = useState<SettingsContextProps>(INITIAL_SETTINGS_CONTEXT)
 
 	return (
-		<ThemeProvider theme={ darkTheme }>
+		<ThemeProvider
+			theme={ darkTheme }
+		>
 			<CssBaseline />
 
-			<SettingsContext.Provider value={ [ settingsState, setSettings ] }>
-				<Grid container spacing={ 2 }>
+			<SettingsContext.Provider
+				value={ [ settingsState, setSettings ] }
+			>
+
+				<Grid
+					container
+					spacing={ 2 }
+				>
 					<AwesomeWrapper />
 					<Sidebar />
 				</Grid>
+
 			</SettingsContext.Provider>
+
 		</ThemeProvider>
 	)
 }

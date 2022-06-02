@@ -1,15 +1,13 @@
-![React Awesome Typography](doc/readme/teaser-image/teaser-image.jpg)
+<img src="doc/logo-teaser.svg" alt="Awesome Typography – The Config Editor" style="display: block; max-width: 20rem; margin: 0 auto 3rem;" />
 
-#### Typography matters – even in the web! This typescript react component will align words visually and replaces typical misspellings every typographer hates. This is a react component for all who needs more control over copy texts in their apps.
+    Typography matters – even in the web! This typescript react component will align words visually and replaces typical misspellings every typographer hates. This is a react component for all who needs more control over copy texts in their apps.
 
 <br/>
 <hr/>
 
-## Example
+## Font Config Editor
 
-[![Edit react-awesome-typography](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/happy-driscoll-wt1gx?fontsize=14&hidenavigation=1&theme=dark)
-
-You can also find an example app (create react app) under `./example` …
+You can find the config editor under `./example` …
 
 ## Install
 

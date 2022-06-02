@@ -6,7 +6,7 @@ import { AlignmentRule } from "react-awesome-typography/lib/types"
 import SettingsContext from "../../context/Setttings"
 
 
-function getRuleIndex (rules: AlignmentRule[], id: string): number | null {
+export function getRuleIndex (rules: AlignmentRule[], id: string): number | null {
 	for (let i = 0; i < rules.length; i++) {
 		if (rules[i].id === id) {
 			return i
@@ -108,7 +108,7 @@ function Row ({ rule, index }: { rule: AlignmentRule, index: number }) {
 }
 
 export default function OASettings () {
-	const [ settings, setSettings ] = useContext(SettingsContext)
+	const [ settings ] = useContext(SettingsContext)
 	const { awtProps: { opticalAlignmentRules } } = settings
 
 	return (
