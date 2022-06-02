@@ -1,6 +1,19 @@
-<img src="doc/logo-teaser.svg" alt="Awesome Typography – The Config Editor" style="display: block; max-width: 20rem; margin: 0 auto 3rem;" />
+<p align="center">
+    <img 
+        src="doc/logo-teaser.svg" 
+        alt="Awesome Typography – The Config Editor" 
+        style="display: block; max-width: 20rem;" 
+    />
+</p>
 
-    Typography matters – even in the web! This typescript react component will align words visually and replaces typical misspellings every typographer hates. This is a react component for all who needs more control over copy texts in their apps.
+<br/>
+
+> Typography matters – even on the web. This typescript react component will
+> align words visually and replaces typical misspellings every typographer hates.
+> This is a react component for all who needs more control over copy texts in
+> their apps.
+
+
 
 <br/>
 <hr/>
