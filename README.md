@@ -20,6 +20,16 @@
 <br/>
 <hr/>
 
+## Current State of this Project
+
+This plugin is currently under construction and not production-ready. 
+
+## Figma Design
+
+I’ve created a figma design for the config editor. The design isn’t fully implemented yet. If you want I can grant you access to the figma files to work together on the design 🥳!
+
+[**Figma Prototype →**](https://www.figma.com/proto/Ip1ZScLgGiaGIDKu7QuHdZ/Editor?node-id=11%3A3&scaling=min-zoom&page-id=0%3A1)
+
 ## Font Config Editor
 
 ![Config Editor](./doc/readme/editor.png)
@@ -33,7 +43,7 @@ yarn # npm i
 yarn --cwd editor
 ```
 
-Then start from
+Then run from within the root directory:
 
 ```
 # start
@@ -177,79 +187,17 @@ yarn test:watch # npm run test:watch
 
 [//]: # (<hr/>)
 
-# Documentation
-
-## Properties
-
-The _react-awesome-typography_ component offers the following properties /
-settings:
-
-### `fixWidows: boolean = true` • optional
-
-See: https://barbarakristaponis.files.wordpress.com/2015/11/typedesignquote2-e1447789973739.png  
-When active, adds non breaking space between last and second last words.
-
-### `alignmentRules: AlignmentRule[]` • optional
-
-Array of alignment rules to define the optical alignment behaviours for each word. Each rule object should be structured like this:
-
-```javascript
-[
-	{
-		id: "W", // required – the name of that rule. Believe me, you will need it in bigger projects!
-		test: /^W/, // required – regex to test on every found word in the text
-		offset: -0.9, // required – «margin-left» adjustment value, unit: "ch" (0-character (zero) width)
-		className: undefined // optional – you can adjust words by using classes too 
-	},
-	// ...
-]    
-```
-
-### `replacementRules: ReplacementRule[]` • optional
-
-Rules to fix and replace misspellings by using regular expressions:
-
-```javascript
-[
-	{
-		description: "replace wrong quotes with french ones", // required – the description of that rule. Believe me, you will need it in bigger projects!
-		test: /(["])([^"]+)(["])/, // required – regex to test on every found word in the text
-		replace: "«$2»", // required – can be string or function, see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replaceAll#description  
-	}
-	// ...
-]    
-```
-
-### `mainDelimiter: string` • optional
-	fixWidows: boolean,
-	breakInnerWordRegex: RegExp,
-
-### `debug` • optional
-
-*Default:* `false`
-*Description:* Renders the affected words with a background-color to see which elements are optical aligned. When default, aligned words are colored red, idle words are colored
-blue.
-
-### `debugOptions` • optional
-
-*Description:* Set background colors for debug mode:
-
-```javascript
-{
-	idleBgColor: "rgba(0, 200, 255, 0.14)",
-		activeBgColor: "rgba(255, 99, 43, 0.2)"  
-}
-```
-
 # Feel free to contribute!
 
 It would be an honor working with you!
 
 # ToDos
 
-- [x] Add Feature: Optical alignment (`alignmentRules`)
-- [ ] Add Feature: Preserve Orphans (`fixWidows`)
-- [ ] Add Feature: Replace typical misspellings (`replacementRules`)
+- [x] Write Tests 
+- [x] Add Feature: Optical Alignment (`alignmentRules`)
+- [ ] Add Feature: Preserve Orphans
+- [x] Add Feature: Grammar / Misspelling Rules (`grammarRules`)
+- [x] Prevent Word Line Jumps on active Optical Alignment Rules
 - [ ] Fix multiline word breaks when using special html entities in word
 - [ ] Add Feature: Find syllables and softwrap them (using `&shy;`)
 - [ ] Add Feature: support for rtl text
