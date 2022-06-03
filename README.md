@@ -29,7 +29,7 @@ This plugin is currently under construction and not production-ready.
 
 I’ve created a figma design for the config editor. The design isn’t fully implemented yet. If you want I can grant you access to the figma files to work together on the design 🥳!
 
-[**Figma Prototype →**]([url](https://www.figma.com/proto/Ip1ZScLgGiaGIDKu7QuHdZ/Editor?node-id=11%3A3&scaling=min-zoom&page-id=0%3A1))
+[**Figma Prototype →**](https://www.figma.com/proto/Ip1ZScLgGiaGIDKu7QuHdZ/Editor?node-id=11%3A3&scaling=min-zoom&page-id=0%3A1)
 
 ## Font Config Editor
 
