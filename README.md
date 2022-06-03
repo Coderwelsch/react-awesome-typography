@@ -44,7 +44,7 @@ yarn # npm i
 yarn --cwd editor
 ```
 
-Then start from
+Then run from within the root directory:
 
 ```
 # start
