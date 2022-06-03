@@ -16,7 +16,7 @@
 > This is a react component for all who needs more control over copy texts in
 > their apps.
 
-⚠️ _This plugin is not prodution-ready! Support highly appreciated_  ❤️️
+⚠️ _This plugin is not production-ready! Support highly appreciated_  ❤️️
 
 <br/>
 <hr/>
