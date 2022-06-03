@@ -1,7 +1,7 @@
 import { Input, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import * as React from "react"
 import { useContext } from "react"
-import { GrammarRule } from "react-awesome-typography/lib/types"
+import { GrammarRule } from "react-awesome-typography/dist/types"
 
 import SettingsContext, { SettingsContextProps } from "../../context/Setttings"
 

@@ -2,7 +2,7 @@ import { Input, Slider, Stack, Table, TableBody, TableCell, TableContainer, Tabl
 import * as React from "react"
 import { useContext } from "react"
 
-import { AlignmentRule } from "react-awesome-typography/lib/types"
+import { AlignmentRule } from "react-awesome-typography/dist/types"
 import SettingsContext from "../../context/Setttings"
 
 

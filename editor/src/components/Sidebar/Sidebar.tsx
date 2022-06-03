@@ -1,6 +1,7 @@
 import { Autocomplete, Grid, Paper, Stack, TextField } from "@mui/material"
 import React, { useEffect, useState } from "react"
-import TeaserSrc from "../../assets/logo-teaser.svg"
+
+import TeaserSrc from "../../assets/logo/editor/dark.svg"
 import GrammarSettings from "../GrammarSettings/GrammarSettings"
 import OASettings from "../OASettings/OASettings"
 import { SettingListElement } from "./ListElement"

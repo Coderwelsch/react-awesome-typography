@@ -1,6 +1,6 @@
 import { Checkbox, Divider, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
 import React, { ReactNode, useContext } from "react"
-import { AwesomeTypographyProps } from "../../../../lib/types"
+import { AwesomeTypographyProps } from "react-awesome-typography/dist/types"
 import SettingsContext from "../../context/Setttings"
 
 
