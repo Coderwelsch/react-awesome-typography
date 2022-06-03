@@ -194,9 +194,11 @@ It would be an honor working with you!
 
 # ToDos
 
-- [x] Add Feature: Optical alignment (`alignmentRules`)
-- [ ] Add Feature: Preserve Orphans (`fixWidows`)
-- [ ] Add Feature: Replace typical misspellings (`replacementRules`)
+- [x] Write Tests 
+- [x] Add Feature: Optical Alignment (`alignmentRules`)
+- [ ] Add Feature: Preserve Orphans
+- [x] Add Feature: Grammar / Misspelling Rules (`grammarRules`)
+- [x] Prevent Word Line Jumps on active Optical Alignment Rules
 - [ ] Fix multiline word breaks when using special html entities in word
 - [ ] Add Feature: Find syllables and softwrap them (using `&shy;`)
 - [ ] Add Feature: support for rtl text
