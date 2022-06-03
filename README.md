@@ -1,15 +1,14 @@
+<p align="center" style="background-color: #0d1117;">
 <br/>
 <br/>
-
-<p align="center">
     <img 
-        src="doc/logo-teaser.svg" 
+        src="doc/readme/logo/react/dark.svg" 
         alt="Awesome Typography – The Config Editor" 
         style="display: block; max-width: 20rem;" 
     />
-</p>
-
 <br/>
+<br/>
+</p>
 
 > Typography matters – even on the web. This typescript react component will
 > align words visually and replaces typical misspellings every typographer hates.
