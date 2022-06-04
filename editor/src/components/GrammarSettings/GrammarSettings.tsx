@@ -4,6 +4,7 @@ import { useContext } from "react"
 import { GrammarRule } from "react-awesome-typography/dist/types"
 
 import SettingsContext, { SettingsContextProps } from "../../context/Setttings"
+import { sanitizeRegExp } from "../../helper"
 
 
 interface UseInputChangeParams {
@@ -55,6 +56,8 @@ function Row ({ rule, index }: { rule: GrammarRule, index: number }) {
 
 	const [ handleInputChange ] = useInputChange({ settings, setSettings })
 
+	const sanitizedTest = sanitizeRegExp(rule.test)
+
 	return (
 		<TableRow
 			sx={ {
@@ -74,7 +77,7 @@ function Row ({ rule, index }: { rule: GrammarRule, index: number }) {
 				<Input
 					size={ "small" }
 					name={ "test" }
-					defaultValue={ rule.test.toString() }
+					defaultValue={ sanitizedTest }
 					onChange={ (event) => handleInputChange(event, index) }
 				/>
 			</TableCell>

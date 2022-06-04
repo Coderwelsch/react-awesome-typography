@@ -4,6 +4,7 @@ import { useContext } from "react"
 
 import { AlignmentRule } from "react-awesome-typography/dist/types"
 import SettingsContext from "../../context/Setttings"
+import { sanitizeRegExp } from "../../helper"
 
 
 export function getRuleIndex (rules: AlignmentRule[], id: string): number | null {
@@ -19,25 +20,26 @@ export function getRuleIndex (rules: AlignmentRule[], id: string): number | null
 function Row ({ rule, index }: { rule: AlignmentRule, index: number }) {
 	const [ settings, setSettings ] = useContext(SettingsContext)
 
-	const handleChange = (index: number, event: Event, value: number | number[]) => {
+	const handleInputChange = (field: string, index: number, value: string | number) => {
 		const newSettings = { ...settings }
+		const rules = newSettings?.awtProps?.opticalAlignmentRules
 
-		if (newSettings?.awtProps?.opticalAlignmentRules && !newSettings?.awtProps?.opticalAlignmentRules[index]) {
+		if (!rules || rules && !rules[index]) {
 			return
 		}
 
-		newSettings.awtProps.opticalAlignmentRules![index].offset = typeof value !== "number" ? value[0] : value
-		setSettings(newSettings)
-	}
+		let _value = value
 
-	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
-		const newSettings = { ...settings }
-
-		if (newSettings?.awtProps?.opticalAlignmentRules && !newSettings?.awtProps?.opticalAlignmentRules[index]) {
-			return
+		if (field === "test") {
+			try {
+				rules[index].test = new RegExp(_value as string)
+			} catch (e) {
+			}
+		} else {
+			// @ts-ignore
+			rules![index][field] = _value
 		}
 
-		newSettings.awtProps.opticalAlignmentRules![index].offset = event.target.value === "" ? 0 : Number(event.target.value)
 		setSettings(newSettings)
 	}
 
@@ -50,8 +52,12 @@ function Row ({ rule, index }: { rule: AlignmentRule, index: number }) {
 				},
 			} }
 		>
-			<TableCell>
-				{ rule.id }
+			<TableCell sx={ { maxWidth: "4rem" } }>
+				<Input
+					defaultValue={ rule.id }
+					name={ "id" }
+					onChange={ ({ currentTarget }) => handleInputChange(currentTarget.name, index, currentTarget.value) }
+				/>
 			</TableCell>
 
 			<TableCell
@@ -62,7 +68,11 @@ function Row ({ rule, index }: { rule: AlignmentRule, index: number }) {
 					fontSize: "0.9rem",
 				} }
 			>
-				{ rule.test.toString() }
+				<Input
+					defaultValue={ sanitizeRegExp(rule.test) }
+					name={ "test" }
+					onChange={ ({ currentTarget }) => handleInputChange(currentTarget.name, index, currentTarget.value) }
+				/>
 			</TableCell>
 
 			<TableCell
@@ -78,7 +88,7 @@ function Row ({ rule, index }: { rule: AlignmentRule, index: number }) {
 					<Slider
 						value={ rule.offset }
 						onChange={ (event, value) =>
-							handleChange(index, event, value)
+							handleInputChange("offset", index, Array.isArray(value) ? value[0] : value)
 						}
 						valueLabelDisplay={ "auto" }
 						step={ 0.01 }
@@ -89,6 +99,7 @@ function Row ({ rule, index }: { rule: AlignmentRule, index: number }) {
 					<Input
 						size={ "small" }
 						value={ rule.offset }
+						name={ "offset" }
 						sx={ {
 							maxWidth: "3.75rem",
 						} }
@@ -99,7 +110,7 @@ function Row ({ rule, index }: { rule: AlignmentRule, index: number }) {
 							type: "number",
 							"aria-labelledby": "input-slider",
 						} }
-						onChange={ (event) => handleInputChange(event, index) }
+						onChange={ ({ currentTarget }) => handleInputChange(currentTarget.name, index, currentTarget.value) }
 					/>
 				</Stack>
 			</TableCell>
