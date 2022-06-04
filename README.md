@@ -82,6 +82,7 @@ It would be an honor working with you!
 - [x] Write Tests 
 - [x] Add Feature: Optical Alignment (`alignmentRules`)
 - [ ] Add Feature: Preserve Orphans
+- [ ] Add Feature: Rules for optical letter spacing
 - [x] Add Feature: Grammar / Misspelling Rules (`grammarRules`)
 - [x] Prevent Word Line Jumps on active Optical Alignment Rules
 - [ ] Fix multiline word breaks when using special html entities in word

@@ -1,7 +1,8 @@
 import { Autocomplete, Grid, Paper, Stack, TextField } from "@mui/material"
-import React, { useEffect, useState } from "react"
+import React, { SyntheticEvent, useContext, useEffect, useState } from "react"
 
 import TeaserSrc from "../../assets/logo/editor/dark.svg"
+import SettingsContext from "../../context/Setttings"
 import GrammarSettings from "../GrammarSettings/GrammarSettings"
 import OASettings from "../OASettings/OASettings"
 import { SettingListElement } from "./ListElement"
@@ -25,24 +26,35 @@ export const Teaser = () =>
 	</Paper>
 
 export function Sidebar<FC> () {
+	const [ settings, setSettings ] = useContext(SettingsContext)
 	const [ fontOptions, setFontOptions ] = useState([
-		{ label: "Waiting …" },
+		settings.fontFamily,
 	])
 
 	const loadFonts = async () => {
 		const result = await fetch(`https://www.googleapis.com/webfonts/v1/webfonts?key=${ process.env.REACT_APP_GOOGLE_API_KEY }`, {})
 		const data = await result.json()
 
-		console.log(data.items)
-
-		setFontOptions(data.items.map((family: any) => ({
-			label: family.family,
-		})))
+		setFontOptions([
+			settings.fontFamily,
+			...data.items.map((family: any) => family.family),
+		])
 	}
 
 	useEffect(() => {
 		loadFonts()
 	}, [])
+
+	function handleFontChange (event: SyntheticEvent, newValue: string | null) {
+		if (!newValue) {
+			return
+		}
+
+		setSettings({
+			...settings,
+			fontFamily: newValue,
+		})
+	}
 
 	return (
 		<Grid
@@ -72,8 +84,11 @@ export function Sidebar<FC> () {
 						disablePortal
 						id="combo-box-demo"
 						options={ fontOptions }
+						value={ settings.fontFamily }
 						fullWidth={ true }
 						sx={ { fontFamily: "monospace" } }
+						// @ts-ignore
+						onChange={ handleFontChange }
 						renderInput={ (params) =>
 							<TextField
 								{ ...params }

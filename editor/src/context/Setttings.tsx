@@ -10,6 +10,7 @@ import { AwesomeTypographyProps } from "react-awesome-typography/dist/types"
 
 export interface SettingsContextProps {
 	awtProps: AwesomeTypographyProps,
+	fontFamily: string,
 }
 
 
@@ -21,6 +22,7 @@ export const INITIAL_SETTINGS_CONTEXT: SettingsContextProps = {
 		opticalAlignmentRules: alignmentRules,
 		grammarRules: combineRules(defaultRules, en_EN),
 	},
+	fontFamily: "Georgia",
 }
 
 console.log("INITIAL_SETTINGS_CONTEXT", INITIAL_SETTINGS_CONTEXT)
