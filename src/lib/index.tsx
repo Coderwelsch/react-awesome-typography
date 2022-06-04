@@ -19,7 +19,7 @@ const hasChildren = (
 	}
 
 	// @ts-ignore
-	return !!element?.props?.children?.length;
+	return !!element?.props?.children?.length
 }
 
 export const transformChild = ({
@@ -30,7 +30,7 @@ export const transformChild = ({
 	opticalAlignmentRules,
 	debug,
 }: TransformChildProps): ReactNode => {
-	// filter: undefined, null, 0, empty strings
+	// filter values: undefined, null, 0, empty strings
 	if (!child) {
 		return child
 	}
@@ -52,8 +52,9 @@ export const transformChild = ({
 		return fixedText
 	}
 
-	if (hasChildren(child)) {
-		const elem = child as ReactElement
+	const elem = child as ReactElement
+
+	if (hasChildren(elem)) {
 		const children = elem?.props?.children
 
 		let modifiedChildren: ReactNode
@@ -80,17 +81,41 @@ export const transformChild = ({
 					grammarRules,
 					enableOpticalAlignment,
 					opticalAlignmentRules,
-					debug
+					debug,
 				}),
 			)
 		}
 
+		const {
+			children: _children,
+			...sanitizedProps
+		} = elem.props
+
 		return cloneElement(
 			elem,
-			elem.props,
+			{
+				...sanitizedProps,
+				key: index,
+			},
 			modifiedChildren,
 		)
+	} else if (
+		typeof elem.type === "function" &&
+		!(elem.type instanceof OpticalAlignmentNodes)
+	) {
+		// @ts-ignore
+		const childInstance = elem.type(elem.props)
+		const transformed = transformChild({
+			child: childInstance,
+			index,
+			grammarRules,
+			enableOpticalAlignment,
+			opticalAlignmentRules,
+			debug,
+		})
+
+		return transformed as ReactElement
 	}
 
-	return child
+	return elem
 }
