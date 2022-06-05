@@ -8,6 +8,15 @@
     />
 <br/>
 <br/>
+    <a href="https://github.com/Coderwelsch/react-awesome-typography/actions/workflows/node.js.yml">
+        <img 
+            src="https://github.com/Coderwelsch/react-awesome-typography/actions/workflows/node.js.yml/badge.svg" 
+            alt="Node.js CI" 
+            style="display: block; max-width: 20rem;" 
+        />
+    </a>
+    <br/>
+    <br/>
 </p>
 
 > Typography matters – even on the web. This typescript react component will
