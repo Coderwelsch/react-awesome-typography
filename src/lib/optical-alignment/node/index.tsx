@@ -23,7 +23,9 @@ function useOALayoutEffect (
 			// reset styles
 			if (rule.offset !== undefined) {
 				spanRef.current.style.marginLeft = ""
-			} else if (rule.className === "string") {
+			}
+
+			if (rule.className === "string") {
 				spanRef.current.classList.remove(rule.className)
 			}
 
@@ -39,8 +41,6 @@ function useOALayoutEffect (
 
 				// TODO: optimize nested ifs
 				if (brRef.current) {
-					console.log("Text: %s, span top: %s, marginTop: %s, parentRect top: %s", text, spanRect.top, marginTop, parentRect.top, parent, spanRef.current)
-
 					if (isOnTop) {
 						// hide
 						brRef.current.style.display = "none"
@@ -52,7 +52,9 @@ function useOALayoutEffect (
 
 				if (rule.offset !== undefined) {
 					spanRef.current.style.marginLeft = `${ rule.offset }ch`
-				} else if (rule.className === "string") {
+				}
+
+				if (rule.className === "string") {
 					spanRef.current.classList.add(rule.className)
 				}
 
@@ -105,11 +107,15 @@ export function Node ({
 		}
 	}
 
-	useOALayoutEffect(spanRef, rule, applyDebug, brRef, containerSize, text, debug)
-
-	// useEffect(() => {
-	// console.log("render word", text)
-	// })
+	useOALayoutEffect(
+		spanRef,
+		rule,
+		applyDebug,
+		brRef,
+		containerSize,
+		text,
+		debug,
+	)
 
 	useEffect(() => {
 		window.addEventListener("resize", handleResize)

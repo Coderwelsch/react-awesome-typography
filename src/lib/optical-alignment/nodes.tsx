@@ -1,13 +1,18 @@
-import React from "react"
+import React, { useContext } from "react"
+
+import AwesomeTypographyContext from "../../context/AwesomeTypographyContext"
 import { OpticalAlignmentNodesProps } from "../../types"
 import { Node } from "./node"
 
 
 export function OpticalAlignmentNodes ({
 	fixedText,
-	debug,
-	opticalAlignmentRules,
 }: OpticalAlignmentNodesProps): JSX.Element {
+	const {
+		debug,
+		opticalAlignmentRules = [],
+	} = useContext(AwesomeTypographyContext)
+
 	const split: string[] = fixedText.split(" ")
 	const transformed = split.map((part, index) => {
 		const isLast = index === split.length - 1

@@ -1,19 +1,26 @@
 import React, { Children, FC } from "react"
 
-import { transformChild } from "./lib"
-import gRules from "./lib/grammar/rules"
+import AwesomeTypographyContext from "./context/AwesomeTypographyContext"
+import { TransformChild } from "./lib"
+import rules from "./lib/grammar/rules"
 import alignmentRules from "./lib/optical-alignment/rules"
 import { AwesomeTypographyProps } from "./types"
 
 
-const ReactAwesomeTypography: FC<AwesomeTypographyProps> = ({
-	enabled = true,
-	children,
-	grammarRules = gRules,
-	enableOpticalAlignment = true,
-	opticalAlignmentRules = alignmentRules,
-	debug,
-}) => {
+const ReactAwesomeTypography: FC<AwesomeTypographyProps> = (props) => {
+	const {
+		enabled = true,
+		children,
+		grammarRules = rules,
+		opticalAlignmentRules = alignmentRules,
+		debug,
+	} = props
+
+	const {
+		children: _children,
+		...contextProps
+	} = props
+
 	if (!enabled) {
 		return (
 			<>
@@ -26,32 +33,20 @@ const ReactAwesomeTypography: FC<AwesomeTypographyProps> = ({
 
 	const transformedChildren = React.useMemo(() => {
 		return childrenArray.map((child, index) =>
-			transformChild({
-				child,
-				index,
-				grammarRules,
-				enableOpticalAlignment,
-				opticalAlignmentRules,
-				debug
-			}),
+			<TransformChild
+				child={ child }
+				index={ index }
+				key={ index }
+			/>,
 		)
 	}, [ children, debug, opticalAlignmentRules, grammarRules ])
 
-	// const transformedChildren = childrenArray.map((child, index) =>
-	// 	transformChild({
-	// 		child,
-	// 		index,
-	// 		grammarRules,
-	// 		enableOpticalAlignment,
-	// 		opticalAlignmentRules,
-	// 		debug,
-	// 	}),
-	// )
-
 	return (
-		<>
+		<AwesomeTypographyContext.Provider
+			value={ contextProps }
+		>
 			{ transformedChildren }
-		</>
+		</AwesomeTypographyContext.Provider>
 	)
 }
 

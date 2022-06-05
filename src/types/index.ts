@@ -27,8 +27,6 @@ export interface DebugOptions {
 
 export interface OpticalAlignmentNodesProps {
 	fixedText: string,
-	debug?: boolean | DebugOptions,
-	opticalAlignmentRules: AlignmentRule[]
 }
 
 
@@ -60,10 +58,6 @@ export enum DebugNodeState {
 export interface TransformChildProps {
 	child: React.ReactNode,
 	index: number,
-	grammarRules: GrammarRules,
-	enableOpticalAlignment: boolean,
-	opticalAlignmentRules: AlignmentRule[]
-	debug?: boolean | DebugOptions
 }
 
 

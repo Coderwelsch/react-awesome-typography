@@ -1,5 +1,6 @@
-import React, { Children, cloneElement, ReactElement, ReactNode } from "react"
+import React, { Children, cloneElement, Fragment, ReactElement, ReactNode, useContext } from "react"
 
+import AwesomeTypographyContext from "../context/AwesomeTypographyContext"
 import { TransformChildProps } from "../types"
 import { fixGrammar } from "./grammar"
 import { OpticalAlignmentNodes } from "./optical-alignment/nodes"
@@ -22,17 +23,24 @@ const hasChildren = (
 	return !!element?.props?.children?.length
 }
 
-export const transformChild = ({
+export const TransformChild = ({
 	child,
 	index,
-	grammarRules,
-	enableOpticalAlignment = true,
-	opticalAlignmentRules,
-	debug,
-}: TransformChildProps): ReactNode => {
+}: TransformChildProps): ReactElement => {
+	const {
+		grammarRules = [],
+		enableOpticalAlignment,
+		opticalAlignmentRules = [],
+		debug,
+	} = useContext(AwesomeTypographyContext)
+
 	// filter values: undefined, null, 0, empty strings
 	if (!child) {
-		return child
+		return (
+			<Fragment key={ `unprocessed-${ index }` }>
+				{ child }
+			</Fragment>
+		)
 	}
 
 	if (typeof child === "string") {
@@ -43,13 +51,15 @@ export const transformChild = ({
 				<OpticalAlignmentNodes
 					key={ index }
 					fixedText={ fixedText }
-					debug={ debug }
-					opticalAlignmentRules={ opticalAlignmentRules }
 				/>
 			)
 		}
 
-		return fixedText
+		return (
+			<Fragment key={ fixedText }>
+				{ fixedText }
+			</Fragment>
+		)
 	}
 
 	const elem = child as ReactElement
@@ -66,8 +76,6 @@ export const transformChild = ({
 				modifiedChildren = (
 					<OpticalAlignmentNodes
 						fixedText={ fixedText }
-						debug={ debug }
-						opticalAlignmentRules={ opticalAlignmentRules }
 					/>
 				)
 			} else {
@@ -75,14 +83,11 @@ export const transformChild = ({
 			}
 		} else if (children?.length) {
 			modifiedChildren = Children.toArray(elem.props.children).map((child, index) =>
-				transformChild({
-					child,
-					index,
-					grammarRules,
-					enableOpticalAlignment,
-					opticalAlignmentRules,
-					debug,
-				}),
+				<TransformChild
+					child={ child }
+					key={ `transformed-${ index }` }
+					index={ index }
+				/>,
 			)
 		}
 
@@ -103,18 +108,17 @@ export const transformChild = ({
 		typeof elem.type === "function" &&
 		!(elem.type instanceof OpticalAlignmentNodes)
 	) {
+		//TODO: fix that @ts-ignore problem
 		// @ts-ignore
 		const childInstance = elem.type(elem.props)
-		const transformed = transformChild({
-			child: childInstance,
-			index,
-			grammarRules,
-			enableOpticalAlignment,
-			opticalAlignmentRules,
-			debug,
-		})
 
-		return transformed as ReactElement
+		return (
+			<TransformChild
+				child={ childInstance }
+				index={ index }
+				key={ `untransformed-${ index }` }
+			/>
+		)
 	}
 
 	return elem
