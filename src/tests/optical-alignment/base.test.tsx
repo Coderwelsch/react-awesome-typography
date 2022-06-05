@@ -13,10 +13,10 @@ describe("Optical Alignment", () => {
 	it("wraps matching substrings into spans", function () {
 		const { container } = render(
 			<RAT>
-				You are ... beauti...... to meeeee!
-			</RAT>
+				Why are you ............ mad?
+			</RAT>,
 		)
 
-		expect(container.innerHTML).toBe(`<br style="display: none;"><span style="margin-left: -0.1ch;">You</span> are … beauti… to meeeee!`)
+		expect(container.innerHTML).toBe("<br style=\"display: none;\"><span style=\"display: inline-block; margin-left: -0.15ch;\">Why</span> are <br style=\"display: none;\"><span style=\"display: inline-block; margin-left: -0.1ch;\">you</span> … mad?")
 	})
 })

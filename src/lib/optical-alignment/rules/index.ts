@@ -1,16 +1,16 @@
 import { AlignmentRule } from "../../../types"
 
 // Georgia example
-const alignmentRules: AlignmentRule[] = [
+const AlignmentRules: AlignmentRule[] = [
 	{
 		id: "quotes",
 		test: /^([«])/,
-		offset: -1
+		offset: -1,
 	},
 	{
 		id: "Ww",
 		test: /^[Ww]/,
-		offset: -0.15
+		offset: -0.15,
 	},
 	{
 		id: "j",
@@ -44,4 +44,4 @@ const alignmentRules: AlignmentRule[] = [
 	}
 ]
 
-export default alignmentRules
+export default AlignmentRules

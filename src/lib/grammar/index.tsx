@@ -4,18 +4,29 @@ import { GrammarRules } from "../../types"
 export function fixGrammar (text: string, rules: GrammarRules) {
 	let _text: string = text
 
+	if (!_text) {
+		return _text
+	}
+
 	for (const rule of rules) {
 		const {
 			test,
 			replace,
 		} = rule
 
-		try	{
+		try {
+			// TODO: improve performance? Do we need the regex flags?
 			const globalTest = new RegExp(test, "gmu")
 
 			// TODO: idk, but typescript won’t allow functions as replace param
 			// @ts-ignore
-			_text = _text.replaceAll(globalTest, replace)
+			const newText = _text.replaceAll(globalTest, replace)
+
+			if (newText) {
+				_text = newText
+			} else {
+				console.error("Something went wrong!", newText, _text)
+			}
 		} catch (e) {
 			console.error(`Couldn’t parse regular expression «${ test }»`, e)
 		}

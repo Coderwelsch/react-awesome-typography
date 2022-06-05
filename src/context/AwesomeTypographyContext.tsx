@@ -1,4 +1,6 @@
 import React, { createContext } from "react"
+import BaseRuleSet from "../lib/grammar/rules"
+import AlignmentRules from "../lib/optical-alignment/rules"
 
 import { AwesomeTypographyProps } from "../types"
 
@@ -11,8 +13,8 @@ const AwesomeTypographyContext = createContext<AwesomeTypographyContextProps>({
 	enabled: true,
 	debug: true,
 	enableOpticalAlignment: true,
-	opticalAlignmentRules: [],
-	grammarRules: [],
+	opticalAlignmentRules: AlignmentRules,
+	grammarRules: BaseRuleSet,
 })
 
 export default AwesomeTypographyContext

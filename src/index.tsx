@@ -2,8 +2,8 @@ import React, { Children, FC } from "react"
 
 import AwesomeTypographyContext from "./context/AwesomeTypographyContext"
 import { TransformChild } from "./lib"
-import rules from "./lib/grammar/rules"
-import alignmentRules from "./lib/optical-alignment/rules"
+import BaseRuleSet from "./lib/grammar/rules"
+import AlignmentRules from "./lib/optical-alignment/rules"
 import { AwesomeTypographyProps } from "./types"
 
 
@@ -11,21 +11,23 @@ const ReactAwesomeTypography: FC<AwesomeTypographyProps> = (props) => {
 	const {
 		enabled = true,
 		children,
-		grammarRules = rules,
-		opticalAlignmentRules = alignmentRules,
-		debug,
+		grammarRules = BaseRuleSet,
+		enableOpticalAlignment = true,
+		opticalAlignmentRules = AlignmentRules,
+		debug = false,
 	} = props
 
-	const {
-		children: _children,
-		...contextProps
-	} = props
+	const contextProps = {
+		enabled,
+		enableOpticalAlignment,
+		opticalAlignmentRules,
+		grammarRules,
+		debug,
+	}
 
 	if (!enabled) {
 		return (
-			<>
-				{ children }
-			</>
+			<>{ children }</>
 		)
 	}
 
@@ -43,7 +45,9 @@ const ReactAwesomeTypography: FC<AwesomeTypographyProps> = (props) => {
 
 	return (
 		<AwesomeTypographyContext.Provider
-			value={ contextProps }
+			value={ {
+				...contextProps,
+			} }
 		>
 			{ transformedChildren }
 		</AwesomeTypographyContext.Provider>

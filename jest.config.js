@@ -162,6 +162,7 @@ module.exports = {
 	testPathIgnorePatterns: [
 		"/node_modules/",
 		"/dist/",
+		"/lib/",
 	],
 
 	// The regexp pattern or array of patterns that Jest uses to detect test files
