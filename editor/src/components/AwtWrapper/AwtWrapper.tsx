@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material"
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import ReactAwesomeTypography from "react-awesome-typography"
 import GoogleFontLoader from "react-google-font-loader"
 
@@ -9,7 +9,14 @@ import { cn } from "../../helper"
 
 export default function AwesomeWrapper<FC> () {
 	const [ settings ] = useContext(SettingsContext)
-	const { awtProps, fontFamily } = settings
+
+	const {
+		awtProps,
+		font: {
+			family,
+			fontVariants,
+		},
+	} = settings
 
 	return (
 		<Grid
@@ -29,19 +36,21 @@ export default function AwesomeWrapper<FC> () {
 				xs={ 8 }
 				margin={ "1rem auto" }
 				sx={ {
-					fontFamily,
+					fontFamily: family,
 				} }
 				className={ cn(
 					"container",
 					awtProps.debug && "debug-active",
 				) }
 			>
-				<GoogleFontLoader
-					fonts={ [ {
-						font: fontFamily,
-						weights: [ 100, 300, 400, 500, 800 ],
-					} ] }
-				/>
+				{ Boolean(fontVariants.length) &&
+					<GoogleFontLoader
+						fonts={ [ {
+							font: family,
+							weights: fontVariants,
+						} ] }
+					/>
+				}
 
 				<ReactAwesomeTypography { ...awtProps }>
 					<h1>"To be, or not to be ........</h1>

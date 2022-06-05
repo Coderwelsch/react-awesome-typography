@@ -27,19 +27,38 @@ export const Teaser = () =>
 
 export function Sidebar<FC> () {
 	const [ settings, setSettings ] = useContext(SettingsContext)
-	const [ fontOptions, setFontOptions ] = useState([
-		settings.fontFamily,
+	const [ googleFonts, setGoogleFonts ] = useState([
+		{
+			family: settings.font.family,
+			variants: settings.font.fontVariants,
+		},
 	])
+	const [ dropdownOptions, setDropdownOptions ] = useState<string[]>([ settings.font.family ])
 
 	const loadFonts = async () => {
 		const result = await fetch(`https://www.googleapis.com/webfonts/v1/webfonts?key=${ process.env.REACT_APP_GOOGLE_API_KEY }`, {})
 		const data = await result.json()
 
-		setFontOptions([
-			settings.fontFamily,
-			...data.items.map((family: any) => family.family),
+		setGoogleFonts([
+			{
+				label: settings.font.family,
+				variants: settings.font.fontVariants,
+			},
+			...data.items.map((font: any) => {
+				return {
+					family: font.family,
+					variants: font.variants,
+				}
+			}),
+		])
+
+		setDropdownOptions([
+			settings.font.family,
+			...data.items.map((font: any) => font.family),
 		])
 	}
+
+	console.log(googleFonts)
 
 	useEffect(() => {
 		loadFonts()
@@ -50,9 +69,17 @@ export function Sidebar<FC> () {
 			return
 		}
 
+		const font = googleFonts.find((elem) =>
+			elem.family === newValue,
+		)
+
 		setSettings({
 			...settings,
-			fontFamily: newValue,
+			font: {
+				...settings.font,
+				family: newValue,
+				fontVariants: font?.variants || [],
+			},
 		})
 	}
 
@@ -82,9 +109,9 @@ export function Sidebar<FC> () {
 				<SettingsSection title={ "Styles" }>
 					<Autocomplete
 						disablePortal
-						id="combo-box-demo"
-						options={ fontOptions }
-						value={ settings.fontFamily }
+						id="combo-box"
+						options={ dropdownOptions }
+						value={ settings.font.family }
 						fullWidth={ true }
 						sx={ { fontFamily: "monospace" } }
 						// @ts-ignore
@@ -92,7 +119,7 @@ export function Sidebar<FC> () {
 						renderInput={ (params) =>
 							<TextField
 								{ ...params }
-								label="Font Family"
+								label={ "Font Family" }
 							/>
 						}
 					/>

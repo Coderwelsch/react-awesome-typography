@@ -8,9 +8,17 @@ import alignmentRules from "react-awesome-typography/dist/lib/optical-alignment/
 import { AwesomeTypographyProps } from "react-awesome-typography/dist/types"
 
 
+export interface FontOptions {
+	family: string,
+	fontVariants: string[]
+	letterSpacing: string
+	lineHeight: string | number
+}
+
+
 export interface SettingsContextProps {
 	awtProps: AwesomeTypographyProps,
-	fontFamily: string,
+	font: FontOptions
 }
 
 
@@ -22,7 +30,12 @@ export const INITIAL_SETTINGS_CONTEXT: SettingsContextProps = {
 		opticalAlignmentRules: alignmentRules,
 		grammarRules: combineRules(defaultRules, en_EN),
 	},
-	fontFamily: "Georgia",
+	font: {
+		family: "Georgia",
+		letterSpacing: "0.01rem",
+		lineHeight: "1.2rem",
+		fontVariants: [],
+	},
 }
 
 console.log("INITIAL_SETTINGS_CONTEXT", INITIAL_SETTINGS_CONTEXT)
