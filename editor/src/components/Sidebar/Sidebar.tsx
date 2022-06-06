@@ -1,4 +1,4 @@
-import { Autocomplete, Grid, Paper, Stack, TextField } from "@mui/material"
+import { Autocomplete, Grid, List, Paper, Stack, TextField } from "@mui/material"
 import React, { SyntheticEvent, useContext, useEffect, useState } from "react"
 
 import TeaserSrc from "../../assets/logo/editor/dark.svg"
@@ -17,9 +17,6 @@ export const Teaser = () =>
 			pb: 3,
 			borderRadius: 0,
 			borderBottom: "1px solid rgba(255,255,255,0.1)",
-			position: "sticky",
-			top: 0,
-			zIndex: 2,
 		} }
 	>
 		<img src={ TeaserSrc } alt={ "Awesome Typography – The Config Editor" } />
@@ -38,18 +35,19 @@ export function Sidebar<FC> () {
 	const loadFonts = async () => {
 		const result = await fetch(`https://www.googleapis.com/webfonts/v1/webfonts?key=${ process.env.REACT_APP_GOOGLE_API_KEY }`, {})
 		const data = await result.json()
+		const sanitizedResult = data.items.map((font: any) => {
+			return {
+				family: font.family,
+				variants: font.variants,
+			}
+		})
 
 		setGoogleFonts([
 			{
 				label: settings.font.family,
 				variants: settings.font.fontVariants,
 			},
-			...data.items.map((font: any) => {
-				return {
-					family: font.family,
-					variants: font.variants,
-				}
-			}),
+			...sanitizedResult,
 		])
 
 		setDropdownOptions([
@@ -58,10 +56,10 @@ export function Sidebar<FC> () {
 		])
 	}
 
-	console.log(googleFonts)
-
 	useEffect(() => {
-		loadFonts()
+		loadFonts().catch((e) => {
+			console.error("Error loading google fonts list", e)
+		})
 	}, [])
 
 	function handleFontChange (event: SyntheticEvent, newValue: string | null) {
@@ -94,16 +92,23 @@ export function Sidebar<FC> () {
 
 			<Stack>
 				<SettingsSection title={ "Base Options" }>
-					<SettingListElement
-						property={ "enabled" }
-						label={ "Enable RAWT" }
-					/>
+					<List>
+						<SettingListElement
+							property={ "enabled" }
+							label={ "Enable RAWT" }
+						/>
 
-					<SettingListElement
-						property={ "debug" }
-						label={ "Debug Mode" }
-						isLast={ true }
-					/>
+						<SettingListElement
+							property={ "debug" }
+							label={ "Debug Mode" }
+						/>
+
+						<SettingListElement
+							property={ "enableOrphanPrevention" }
+							label={ "Orphan Prevention" }
+							isLast={ true }
+						/>
+					</List>
 				</SettingsSection>
 
 				<SettingsSection title={ "Styles" }>
@@ -126,11 +131,25 @@ export function Sidebar<FC> () {
 				</SettingsSection>
 
 				<SettingsSection title={ "Grammar Correction" }>
-					<GrammarSettings />
+					<Paper
+						sx={ {
+							borderRadius: "0.5rem",
+							backgroundColor: "rgba(255, 255, 255, 0.1)",
+						} }
+					>
+						<GrammarSettings />
+					</Paper>
 				</SettingsSection>
 
 				<SettingsSection title={ "Optical Alignment" }>
-					<OASettings />
+					<Paper
+						sx={ {
+							borderRadius: "0.5rem",
+							backgroundColor: "rgba(255, 255, 255, 0.1)",
+						} }
+					>
+						<OASettings />
+					</Paper>
 				</SettingsSection>
 
 			</Stack>

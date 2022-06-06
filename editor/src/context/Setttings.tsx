@@ -15,10 +15,15 @@ export interface FontOptions {
 	lineHeight: string | number
 }
 
+export interface TextSelectionProps {
+	boundingBox: DOMRect,
+	selection: string,
+}
 
 export interface SettingsContextProps {
 	awtProps: AwesomeTypographyProps,
-	font: FontOptions
+	font: FontOptions,
+	textSelection?: null | boolean | TextSelectionProps
 }
 
 
@@ -27,6 +32,7 @@ export const INITIAL_SETTINGS_CONTEXT: SettingsContextProps = {
 		enabled: true,
 		debug: true,
 		enableOpticalAlignment: true,
+		enableOrphanPrevention: true,
 		opticalAlignmentRules: alignmentRules,
 		grammarRules: combineRules(defaultRules, en_EN),
 	},
@@ -36,6 +42,7 @@ export const INITIAL_SETTINGS_CONTEXT: SettingsContextProps = {
 		lineHeight: "1.2rem",
 		fontVariants: [],
 	},
+	textSelection: null,
 }
 
 console.log("INITIAL_SETTINGS_CONTEXT", INITIAL_SETTINGS_CONTEXT)

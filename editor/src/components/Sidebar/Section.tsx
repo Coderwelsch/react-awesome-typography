@@ -1,4 +1,4 @@
-import { List, Stack, Typography } from "@mui/material"
+import { Stack, Typography } from "@mui/material"
 import React, { FC, ReactNode } from "react"
 
 
@@ -17,7 +17,7 @@ export const SettingsSection: FC<SettingsSectionProps> = ({
 			spacing={ 2 }
 			sx={ {
 				borderBottom: "1px solid rgba(255,255,255,0.1)",
-				p: 4, pl: 4
+				p: 4, pl: 4,
 			} }
 		>
 			<Typography
@@ -30,9 +30,7 @@ export const SettingsSection: FC<SettingsSectionProps> = ({
 				{ title }
 			</Typography>
 
-			<List>
-				{ children }
-			</List>
+			{ children }
 		</Stack>
 	)
 }

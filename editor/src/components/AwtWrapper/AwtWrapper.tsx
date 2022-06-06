@@ -1,14 +1,44 @@
-import { Grid } from "@mui/material"
-import React, { useContext, useEffect, useState } from "react"
+import { Autocomplete, Divider, Grid, TextField } from "@mui/material"
+import React, { ReactElement, SyntheticEvent, useContext, useEffect, useState } from "react"
 import ReactAwesomeTypography from "react-awesome-typography"
 import GoogleFontLoader from "react-google-font-loader"
 
 import SettingsContext from "../../context/Setttings"
 import { cn } from "../../helper"
+import "./AwtWrapper.scss"
+import Kerning from "./examples/Kerning/Kerning"
+import Poem from "./examples/Poem/Poem"
 
+
+function ExampleComponent () {
+	console.log("ExampleComponent", "render")
+
+	const [ state, setState ] = useState(false)
+
+	useEffect(() => {
+		setTimeout(() => {
+			setState(!state)
+		}, 3000)
+	}, [ state ])
+
+	return (
+		<button>
+			Hello, World! { state && <span>Awesome ............ !</span> }
+		</button>
+	)
+}
+
+const exampleOptions: Record<string, () => ReactElement> = {
+	"Poem": Poem,
+	"Kerning": Kerning,
+}
+
+const autoCompleteOptions = Object.keys(exampleOptions)
 
 export default function AwesomeWrapper<FC> () {
 	const [ settings ] = useContext(SettingsContext)
+	const [ exampleTextValue, setExample ] = useState(autoCompleteOptions[0])
+	const Example = exampleOptions[exampleTextValue]
 
 	const {
 		awtProps,
@@ -17,6 +47,14 @@ export default function AwesomeWrapper<FC> () {
 			fontVariants,
 		},
 	} = settings
+
+	const handleExampleChange = (event: SyntheticEvent, newValue: string | null) => {
+		if (newValue) {
+			setExample(newValue)
+		} else {
+			console.error("Example empty", newValue)
+		}
+	}
 
 	return (
 		<Grid
@@ -38,10 +76,6 @@ export default function AwesomeWrapper<FC> () {
 				sx={ {
 					fontFamily: family,
 				} }
-				className={ cn(
-					"container",
-					awtProps.debug && "debug-active",
-				) }
 			>
 				{ Boolean(fontVariants.length) &&
 					<GoogleFontLoader
@@ -52,65 +86,30 @@ export default function AwesomeWrapper<FC> () {
 					/>
 				}
 
-				<ReactAwesomeTypography { ...awtProps }>
-					<h1>"To be, or not to be ........</h1>
+				<Autocomplete
+					renderInput={ (params) =>
+						<TextField
+							{ ...params }
+							label={ "Text Example" }
+						/>
+					}
+					onChange={ handleExampleChange }
+					value={ exampleTextValue }
+					options={ autoCompleteOptions }
+				/>
 
-					<p>
-						....... that is the question:
-						Whether 'tis nobler in the mind to suffer
-						The slings and arrows of outrageous fortune,
-						Or to take arms against a sea of troubles,
-						And by opposing, end them? To die: to sleep;
-					</p>
+				<Divider sx={ { margin: "2rem 0" } } />
 
-					<p>
-						No more; and by a sleep to say we end
-						The heart-ache and the thousand natural shocks
-						That flesh is heir to, ’tis a consummation
-						Devoutly to be wish’d. To die, to sleep;
-						To sleep: perchance to dream: ay, there’s the rub;
-					</p>
-
-					<p>
-						For in that sleep of death what dreams may come
-						When we have shuffled off this mortal coil,
-						Must give us pause: there’s the respect
-						That makes calamity of so long life;
-						For who would bear the whips and scorns of time,
-					</p>
-
-					<p>
-						The oppressor’s wrong, the proud man’s contumely,
-						The pangs of despised love, the law’s delay,
-						The insolence of office and the spurns
-						That patient merit of the unworthy takes,
-						When he himself might his quietus make
-					</p>
-
-					<p>
-						With a bare bodkin? who would fardels bear,
-						To grunt and sweat under a weary life,
-						But that the dread of something after death,
-						The undiscover’d country from whose bourn
-						No traveller returns, puzzles the will
-					</p>
-
-					<p>
-						And makes us rather bear those ills we have
-						Than fly to others that we know not of?
-						Thus conscience does make cowards of us all;
-						And thus the native hue of resolution
-						Is sicklied o’er with the pale cast of thought,
-					</p>
-
-					<p>
-						And enterprises of great pith and moment
-						With this regard their currents turn awry,
-						And lose the name of action. – Soft you now!
-						The fair Ophelia! Nymph, in thy orisons
-						Be all my sins remember’d."
-					</p>
-				</ReactAwesomeTypography>
+				<div
+					className={ cn(
+						"awt-container",
+						awtProps.debug && "debug-active",
+					) }
+				>
+					<ReactAwesomeTypography { ...awtProps }>
+						<Example />
+					</ReactAwesomeTypography>
+				</div>
 			</Grid>
 		</Grid>
 	)

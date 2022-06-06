@@ -6,7 +6,7 @@ import "./App.scss"
 import AwesomeWrapper from "./components/AwtWrapper/AwtWrapper"
 import { Sidebar } from "./components/Sidebar/Sidebar"
 import SettingsContext, { INITIAL_SETTINGS_CONTEXT, SettingsContextProps } from "./context/Setttings"
-import { darkTheme } from "./theme/dark-theme"
+import { darkTheme, lightTheme } from "./theme/dark-theme"
 
 
 function App () {
@@ -16,11 +16,7 @@ function App () {
 	] = useState<SettingsContextProps>(INITIAL_SETTINGS_CONTEXT)
 
 	return (
-		<ThemeProvider
-			theme={ darkTheme }
-		>
-			<CssBaseline />
-
+		<>
 			<SettingsContext.Provider
 				value={ [ settingsState, setSettings ] }
 			>
@@ -29,13 +25,20 @@ function App () {
 					container
 					spacing={ 2 }
 				>
-					<AwesomeWrapper />
-					<Sidebar />
+					<ThemeProvider theme={ lightTheme }>
+						<AwesomeWrapper />
+						<CssBaseline />
+					</ThemeProvider>
+
+					<ThemeProvider theme={ darkTheme }>
+						<Sidebar />
+						<CssBaseline />
+					</ThemeProvider>
 				</Grid>
 
 			</SettingsContext.Provider>
 
-		</ThemeProvider>
+		</>
 	)
 }
 

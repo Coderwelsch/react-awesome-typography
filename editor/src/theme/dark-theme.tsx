@@ -14,14 +14,16 @@ export const UiFont = [
 	"\"Segoe UI Symbol\"",
 ].join(",")
 
+export const defaultFontFamily: string = [
+	"Georgia",
+].join(", ")
+
 export const darkTheme = createTheme({
 	typography: {
-		fontFamily: [
-			"Georgia",
-		].join(", "),
+		fontFamily: defaultFontFamily,
 		fontSize: 16,
 		button: {
-			fontFamily: "Arial",
+			fontFamily: UiFont,
 			textTransform: "none",
 		},
 		caption: {
@@ -51,15 +53,20 @@ export const darkTheme = createTheme({
 				elevation: 0,
 			},
 		},
+		MuiGrid: {
+			defaultProps: {
+				sx: {},
+			},
+		},
 		MuiAutocomplete: {
 			defaultProps: {
 				sx: {
 					"input::placeholder": {
 						fontFamily: UiFont,
-					}
-				}
-			}
-		}
+					},
+				},
+			},
+		},
 	},
 	palette: {
 		mode: "dark",
@@ -74,5 +81,44 @@ export const darkTheme = createTheme({
 			paper: "#373636",
 		},
 		divider: "rgba(255, 255, 255, 0.10)",
+	},
+})
+
+export const lightTheme = createTheme({
+	palette: {
+		mode: "light",
+		text: {
+			primary: "#45331a",
+		},
+		divider: "rgba(0, 0, 0, 1)",
+	},
+	typography: {
+		fontFamily: defaultFontFamily,
+		fontSize: 16,
+		button: {
+			fontFamily: UiFont,
+			textTransform: "none",
+		},
+		caption: {
+			fontFamily: UiFont,
+		},
+		subtitle1: {
+			fontFamily: UiFont,
+		},
+		subtitle2: {
+			fontFamily: UiFont,
+		},
+	},
+	components: {
+		MuiDivider: {
+			defaultProps: {
+				// sx: {
+				// 	// color: "rgba(0, 0, 0, 0.8)",
+				// 	fontSize: "0.65rem",
+				// 	letterSpacing: "0.03rem",
+				// 	textTransform: "uppercase",
+				// },
+			},
+		},
 	},
 })

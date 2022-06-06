@@ -28,10 +28,11 @@ export function SettingListElement ({
 		return null
 	}
 
-	const _setSetting = (key: keyof AwesomeTypographyProps, value: any) => {
+	const _setSetting = (key: keyof AwesomeTypographyProps, value: boolean) => {
 		const newSettings = { ...settings }
 
-		if (newSettings.awtProps[key] !== undefined) {
+		if (key in newSettings.awtProps) {
+			// @ts-ignore
 			newSettings.awtProps[key] = value
 		}
 
@@ -39,7 +40,6 @@ export function SettingListElement ({
 	}
 
 	const handleChange = () => {
-		_setSetting(property, !value)
 		_setSetting(property, !value)
 	}
 

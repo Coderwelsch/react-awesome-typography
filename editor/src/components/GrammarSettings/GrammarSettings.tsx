@@ -1,4 +1,5 @@
-import { Input, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
+import { AddCircle } from "@mui/icons-material"
+import { Button, Grid, Input, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import * as React from "react"
 import { useContext } from "react"
 import { GrammarRule } from "react-awesome-typography/dist/types"
@@ -104,32 +105,54 @@ export default function GrammarSettings () {
 	const { awtProps: { grammarRules = [] } } = settings
 
 	return (
-		<TableContainer>
-			<Table sx={ { width: "100%" } } aria-label="simple table">
-				<TableHead>
-					<TableRow sx={ { "th": { fontWeight: "bold" } } }>
-						<TableCell align="right">
-							Regex
-						</TableCell>
-
-						<TableCell
-							align="right"
-							sx={ { minWidth: "8rem" } }
+		<>
+			<TableContainer>
+				<Table
+					sx={ { width: "100%" } }
+					aria-label="simple table"
+				>
+					<TableHead sx={ { position: "sticky", top: 0 } }>
+						<TableRow
+							sx={ {
+								"th": { fontWeight: "bold" },
+							} }
 						>
-							Replacement
-						</TableCell>
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					{ grammarRules.map((rule, index) => (
-						<Row
-							rule={ rule }
-							index={ index }
-							key={ index }
-						/>
-					)) }
-				</TableBody>
-			</Table>
-		</TableContainer>
+							<TableCell
+								align="left"
+							>
+								Regex
+							</TableCell>
+
+							<TableCell
+								align="left"
+								sx={ { minWidth: "8rem" } }
+							>
+								Replacement
+							</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{ grammarRules.map((rule, index) => (
+							<Row
+								rule={ rule }
+								index={ index }
+								key={ index }
+							/>
+						)) }
+					</TableBody>
+				</Table>
+			</TableContainer>
+
+			<Grid
+				container
+				sx={ { justifyContent: "center" } }
+				margin={ "0.25rem 0" }
+				marginBottom={ "0.75rem" }
+			>
+				<Button startIcon={ <AddCircle /> }>
+					Add Rule
+				</Button>
+			</Grid>
+		</>
 	)
 }
