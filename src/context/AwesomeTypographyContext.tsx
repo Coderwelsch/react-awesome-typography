@@ -15,6 +15,8 @@ const AwesomeTypographyContext = createContext<AwesomeTypographyContextProps>({
 	enableOpticalAlignment: true,
 	opticalAlignmentRules: AlignmentRules,
 	grammarRules: BaseRuleSet,
+	enableKerning: true,
+	kerningRules: [],
 })
 
 export default AwesomeTypographyContext

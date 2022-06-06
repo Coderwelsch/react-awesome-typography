@@ -36,7 +36,6 @@ function useOALayoutEffect (
 			const isOnLeftTextSide = spanRect.left <= parentRect.left
 
 			if (isOnLeftTextSide) {
-				const marginTop = Number.parseFloat(window.getComputedStyle(parent).marginTop)
 				let isOnTop = spanRect.top <= parentRect.top
 
 				// TODO: optimize nested ifs
@@ -70,7 +69,6 @@ export function Node ({
 	text,
 	rule,
 	debug,
-	isLastWord,
 }: NodeProps) {
 	const spanRef = useRef<HTMLSpanElement>(null)
 	const brRef = useRef<HTMLBRElement>(null)
@@ -132,6 +130,8 @@ export function Node ({
 				ref={ brRef }
 			/>
 
+			{ " " }
+
 			<span
 				ref={ spanRef }
 				style={ {
@@ -141,8 +141,6 @@ export function Node ({
 			>
 				{ text }
 			</span>
-
-			{ !isLastWord ? " " : null }
 		</Fragment>
 	)
 }

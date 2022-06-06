@@ -29,6 +29,9 @@ export interface OpticalAlignmentNodesProps {
 	fixedText: string,
 }
 
+export interface KerningRule extends Omit<AlignmentRule, "test"> {
+	test: string
+}
 
 export const DEFAULT_DEBUG_STYLES: DebugOptions = {
 	activeStyle: {
@@ -44,7 +47,6 @@ export interface NodeProps {
 	text: string,
 	rule: AlignmentRule,
 	debug?: boolean | DebugOptions
-	isLastWord: boolean
 }
 
 
@@ -64,9 +66,12 @@ export interface TransformChildProps {
 export interface AwesomeTypographyProps {
 	enabled?: boolean,
 	children?: ReactNode,
+	enableOrphanPrevention?: boolean,
 	grammarRules?: GrammarRules,
 	enableOpticalAlignment?: boolean,
 	opticalAlignmentRules?: AlignmentRule[],
+	enableKerning?: boolean,
+	kerningRules?: KerningRule[],
 	debug?: boolean | DebugOptions
 	className?: string
 }

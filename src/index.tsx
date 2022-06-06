@@ -9,20 +9,32 @@ import { AwesomeTypographyProps } from "./types"
 
 const ReactAwesomeTypography: FC<AwesomeTypographyProps> = (props) => {
 	const {
-		enabled = true,
 		children,
-		grammarRules = BaseRuleSet,
-		enableOpticalAlignment = true,
-		opticalAlignmentRules = AlignmentRules,
+		enabled = true,
 		debug = false,
+
+		// rules
+		grammarRules = BaseRuleSet,
+		opticalAlignmentRules = AlignmentRules,
+		kerningRules = [],
+
+		// features
+		enableOpticalAlignment = true,
+		enableKerning = true,
+		enableOrphanPrevention = true,
 	} = props
 
 	const contextProps = {
 		enabled,
-		enableOpticalAlignment,
+		debug,
+
 		opticalAlignmentRules,
 		grammarRules,
-		debug,
+		kerningRules,
+
+		enableOrphanPrevention,
+		enableOpticalAlignment,
+		enableKerning,
 	}
 
 	if (!enabled) {
