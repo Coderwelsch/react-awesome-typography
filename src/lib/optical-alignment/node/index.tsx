@@ -66,6 +66,9 @@ function useOALayoutEffect (
 }
 
 export function Node ({
+	isFirst,
+	isForelast,
+	appendSpace,
 	text,
 	rule,
 	debug,
@@ -130,7 +133,7 @@ export function Node ({
 				ref={ brRef }
 			/>
 
-			{ " " }
+			{ appendSpace && !isFirst && !isForelast ? " " : null }
 
 			<span
 				ref={ spanRef }

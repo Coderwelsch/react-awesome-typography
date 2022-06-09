@@ -33,7 +33,7 @@ export function OpticalAlignmentNodes ({
 			// break on first occurence to preserve
 			// overwriting rules
 			if (test.test(part)) {
-				let suffix: string = ""
+				let suffix: string = " "
 
 				/*
 				*
@@ -48,7 +48,10 @@ export function OpticalAlignmentNodes ({
 				*
 				* */
 
-				if (isForelast && enableOrphanPrevention) {
+				if (
+					index === 0 && split.length === 2 ||
+					isForelast && enableOrphanPrevention
+				) {
 					const lastWord = split[split.length - 1]
 
 					suffix = NON_BREAKING_SPACE + lastWord
@@ -60,20 +63,28 @@ export function OpticalAlignmentNodes ({
 						key={ `${ index }-${ part }-${ id }` }
 						text={ part + suffix }
 						rule={ rule }
+						appendSpace={ !shouldSkipLast }
+						isFirst={ index === 0 }
+						isForelast={ isForelast }
 						debug={ debug }
 					/>
 				)
 			}
 		}
 
-		let suffix: string = " "
+		let prefix: string = " "
 
-		if (enableOrphanPrevention && isLast) {
-			suffix = NON_BREAKING_SPACE
+		if (split.length == 2 && index === 0) {
+			prefix = NON_BREAKING_SPACE
+		}
+		if (index === 0 || isForelast || shouldSkipLast) {
+			prefix = ""
+		} else if (enableOrphanPrevention && isLast) {
+			prefix = NON_BREAKING_SPACE
 		}
 
 		return (
-			suffix + part
+			prefix + part
 		)
 	})
 

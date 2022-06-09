@@ -44,6 +44,9 @@ export const DEFAULT_DEBUG_STYLES: DebugOptions = {
 
 
 export interface NodeProps {
+	isFirst: boolean,
+	isForelast: boolean,
+	appendSpace: boolean,
 	text: string,
 	rule: AlignmentRule,
 	debug?: boolean | DebugOptions
