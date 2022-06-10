@@ -1,5 +1,5 @@
 import { Autocomplete, Divider, Grid, TextField } from "@mui/material"
-import React, { ReactElement, SyntheticEvent, useContext, useEffect, useState } from "react"
+import React, { ReactElement, SyntheticEvent, useContext, useState } from "react"
 import ReactAwesomeTypography from "react-awesome-typography"
 import GoogleFontLoader from "react-google-font-loader"
 
@@ -10,24 +10,6 @@ import Kerning from "./examples/Kerning/Kerning"
 import Poem from "./examples/Poem/Poem"
 
 
-function ExampleComponent () {
-	console.log("ExampleComponent", "render")
-
-	const [ state, setState ] = useState(false)
-
-	useEffect(() => {
-		setTimeout(() => {
-			setState(!state)
-		}, 3000)
-	}, [ state ])
-
-	return (
-		<button>
-			Hello, World! { state && <span>Awesome ............ !</span> }
-		</button>
-	)
-}
-
 const exampleOptions: Record<string, () => ReactElement> = {
 	"Poem": Poem,
 	"Kerning": Kerning,
@@ -35,7 +17,7 @@ const exampleOptions: Record<string, () => ReactElement> = {
 
 const autoCompleteOptions = Object.keys(exampleOptions)
 
-export default function AwesomeWrapper<FC> () {
+export default function AwesomeWrapper () {
 	const [ settings ] = useContext(SettingsContext)
 	const [ exampleTextValue, setExample ] = useState(autoCompleteOptions[0])
 	const Example = exampleOptions[exampleTextValue]
@@ -102,7 +84,7 @@ export default function AwesomeWrapper<FC> () {
 
 				<div
 					className={ cn(
-						"awt-container",
+						"awt-container rawt-container",
 						awtProps.debug && "debug-active",
 					) }
 				>
