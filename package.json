@@ -21,8 +21,9 @@
 	"private": false,
 	"scripts": {
 		"install": "yarn build",
-		"build": "tsc --outDir dist",
-		"clear-lib": "rm -rf dist",
+		"build": "tsc --outDir dist && yarn build:sass",
+		"build:sass": "node_modules/.bin/sass src:dist",
+		"clear-lib": "rm -rf dist && rm -rf lib",
 		"start": "tsc --watch & yarn --cwd editor start",
 		"test": "jest",
 		"test:watch": "jest --watch",
@@ -33,6 +34,8 @@
 		"react-dom": "18.1.0"
 	},
 	"devDependencies": {
+		"jest-environment-jsdom": "^28.1.0",
+		"sass": "^1.52.3",
 		"@testing-library/jest-dom": "^5.16.4",
 		"@testing-library/react": "^13.2.0",
 		"@types/jest": "^27.5.1",
@@ -48,8 +51,5 @@
 			"react-app",
 			"react-app/jest"
 		]
-	},
-	"dependencies": {
-		"jest-environment-jsdom": "^28.1.0"
 	}
 }
