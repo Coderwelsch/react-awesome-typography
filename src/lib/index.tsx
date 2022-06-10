@@ -50,7 +50,7 @@ export const TransformChild = ({
 			return (
 				<OpticalAlignmentNodes
 					key={ index }
-					fixedText={ fixedText }
+					text={ fixedText }
 				/>
 			)
 		}
@@ -75,7 +75,7 @@ export const TransformChild = ({
 			if (enableOpticalAlignment) {
 				modifiedChildren = (
 					<OpticalAlignmentNodes
-						fixedText={ fixedText }
+						text={ fixedText }
 					/>
 				)
 			} else {

@@ -26,7 +26,7 @@ export interface DebugOptions {
 
 
 export interface OpticalAlignmentNodesProps {
-	fixedText: string,
+	text: string,
 }
 
 export interface KerningRule extends Omit<AlignmentRule, "test"> {

@@ -133,8 +133,6 @@ export function Node ({
 				ref={ brRef }
 			/>
 
-			{ appendSpace && !isFirst && !isForelast ? " " : null }
-
 			<span
 				ref={ spanRef }
 				style={ {

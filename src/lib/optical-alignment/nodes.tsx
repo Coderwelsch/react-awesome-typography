@@ -7,7 +7,7 @@ import { Node } from "./node"
 
 
 export function OpticalAlignmentNodes ({
-	fixedText,
+	text,
 }: OpticalAlignmentNodesProps): JSX.Element {
 	const {
 		debug,
@@ -16,7 +16,7 @@ export function OpticalAlignmentNodes ({
 	} = useContext(AwesomeTypographyContext)
 
 	let shouldSkipLast = false
-	const split: string[] = fixedText.split(" ")
+	const split: string[] = text.split(" ")
 
 	const transformed = split.map((part, index) => {
 		const isLast = index === split.length - 1
@@ -26,32 +26,43 @@ export function OpticalAlignmentNodes ({
 			return
 		}
 
+		// TODO: move pre/sufix checks to a separate function
+		let optimizedPart = part
+		let prefix = ""
+
+		let suffix = ""
+
+		if (!isForelast && !isLast) {
+			prefix = ""
+			suffix = " "
+		} else if (isForelast) {
+			suffix = enableOrphanPrevention ?
+				NON_BREAKING_SPACE :
+				" "
+		}
+
+		// console.log("Part: '%s', Index: %s / %s", optimizedPart, index, split.length)
+
 		for (let ruleIndex = 0; ruleIndex < opticalAlignmentRules.length; ruleIndex++) {
 			const rule = opticalAlignmentRules[ruleIndex]
 			const { test, id } = rule
 
-			// break on first occurence to preserve
+			// will breaks on first found to prevent
 			// overwriting rules
 			if (test.test(part)) {
-				let suffix: string = " "
-
 				/*
-				*
-				* ======================================
+				* =======================================
 				* ======= Orphan Prevention Info ========
-				* ======================================
+				* =======================================
 				*
-				* * It isn possible to prevent word breaks
-				* for span and text elements, so I had to
+				* It isn possible to prevent word breaks
+				* for mixed span and text elements, so I had to
 				* render the last word within the forelast
 				* loop execution.
 				*
 				* */
 
-				if (
-					index === 0 && split.length === 2 ||
-					isForelast && enableOrphanPrevention
-				) {
+				if (enableOrphanPrevention && isForelast) {
 					const lastWord = split[split.length - 1]
 
 					suffix = NON_BREAKING_SPACE + lastWord
@@ -61,7 +72,7 @@ export function OpticalAlignmentNodes ({
 				return (
 					<Node
 						key={ `${ index }-${ part }-${ id }` }
-						text={ part + suffix }
+						text={ prefix + optimizedPart + suffix }
 						rule={ rule }
 						appendSpace={ !shouldSkipLast }
 						isFirst={ index === 0 }
@@ -72,19 +83,8 @@ export function OpticalAlignmentNodes ({
 			}
 		}
 
-		let prefix: string = " "
-
-		if (split.length == 2 && index === 0) {
-			prefix = NON_BREAKING_SPACE
-		}
-		if (index === 0 || isForelast || shouldSkipLast) {
-			prefix = ""
-		} else if (enableOrphanPrevention && isLast) {
-			prefix = NON_BREAKING_SPACE
-		}
-
 		return (
-			prefix + part
+			prefix + optimizedPart + suffix
 		)
 	})
 
