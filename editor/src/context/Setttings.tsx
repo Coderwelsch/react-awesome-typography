@@ -1,4 +1,5 @@
-import React from "react"
+import { TooltipProps } from "@mui/material"
+import React, { ReactNode } from "react"
 
 import defaultRules from "react-awesome-typography/dist/lib/grammar/rules"
 import en_EN from "react-awesome-typography/dist/lib/grammar/rules/en_EN"
@@ -15,15 +16,22 @@ export interface FontOptions {
 	lineHeight: string | number
 }
 
+
 export interface TextSelectionProps {
 	boundingBox: DOMRect,
 	selection: string,
 }
 
+
 export interface SettingsContextProps {
 	awtProps: AwesomeTypographyProps,
 	font: FontOptions,
-	textSelection?: null | boolean | TextSelectionProps
+	popover?: null | {
+		children: ReactNode,
+		center: [ number, number ],
+		popoverProps?: Partial<TooltipProps>
+	},
+	textSelection?: null | TextSelectionProps
 }
 
 

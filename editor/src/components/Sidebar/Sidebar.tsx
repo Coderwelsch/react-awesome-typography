@@ -113,7 +113,7 @@ export function Sidebar<FC> () {
 
 				<SettingsSection title={ "Styles" }>
 					<Autocomplete
-						disablePortal
+						disablePortal={ true }
 						id="combo-box"
 						options={ dropdownOptions }
 						value={ settings.font.family }
