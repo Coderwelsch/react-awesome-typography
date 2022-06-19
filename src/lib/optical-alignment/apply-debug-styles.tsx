@@ -1,8 +1,20 @@
 import { CSSProperties } from "react"
+
 import { DebugNodeState, DebugOptions, DEFAULT_DEBUG_STYLES } from "../../types"
 
 
-export const applyDebugStyles = (element: HTMLSpanElement, debugOptions: undefined | boolean | DebugOptions, state: DebugNodeState) => {
+export interface ApplyDebugStylesProps {
+	element: HTMLSpanElement,
+	debugOptions: boolean | DebugOptions | undefined,
+	state: DebugNodeState
+}
+
+
+export const applyDebugStyles = ({
+	element,
+	debugOptions,
+	state,
+}: ApplyDebugStylesProps) => {
 	let style: CSSProperties
 	let _debugOptions: DebugOptions = { ...DEFAULT_DEBUG_STYLES }
 
@@ -13,15 +25,12 @@ export const applyDebugStyles = (element: HTMLSpanElement, debugOptions: undefin
 	switch (state) {
 		case DebugNodeState.ACTIVE:
 			style = _debugOptions.activeStyle
+			element.setAttribute("data-oa-rule-active", "true")
 			break
 
-		case DebugNodeState.IDLE:
+		default:
 			style = _debugOptions.idleStyle
 			break
-		case DebugNodeState.NONE:
-			style = {
-				backgroundColor: "",
-			}
 	}
 
 	Object.entries(style).map(([ key, value ]) => {

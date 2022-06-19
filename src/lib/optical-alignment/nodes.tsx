@@ -72,11 +72,10 @@ export function OpticalAlignmentNodes ({
 				return (
 					<Node
 						key={ `${ index }-${ part }-${ id }` }
-						text={ prefix + optimizedPart + suffix }
+						prefix={ prefix }
+						text={ optimizedPart }
+						suffix={ suffix }
 						rule={ rule }
-						appendSpace={ !shouldSkipLast }
-						isFirst={ index === 0 }
-						isForelast={ isForelast }
 						debug={ debug }
 					/>
 				)

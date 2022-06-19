@@ -44,17 +44,15 @@ export const DEFAULT_DEBUG_STYLES: DebugOptions = {
 
 
 export interface NodeProps {
-	isFirst: boolean,
-	isForelast: boolean,
-	appendSpace: boolean,
+	prefix?: string,
 	text: string,
+	suffix?: string,
 	rule: AlignmentRule,
 	debug?: boolean | DebugOptions
 }
 
 
 export enum DebugNodeState {
-	NONE = "none",
 	IDLE = "idle",
 	ACTIVE = "active",
 }

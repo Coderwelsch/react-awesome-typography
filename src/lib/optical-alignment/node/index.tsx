@@ -4,7 +4,7 @@ import { AlignmentRule, DebugNodeState, DebugOptions, NodeProps } from "../../..
 import { applyDebugStyles } from "../apply-debug-styles"
 
 
-function useOALayoutEffect (
+export interface OALayoutEffectProps {
 	spanRef: React.RefObject<HTMLSpanElement>,
 	rule: AlignmentRule,
 	applyDebug: (
@@ -14,8 +14,19 @@ function useOALayoutEffect (
 	brRef: React.RefObject<HTMLBRElement>,
 	containerSize: number,
 	text: string,
-	debug?: boolean | DebugOptions,
-) {
+	debug?: boolean | DebugOptions
+}
+
+
+function useOALayoutEffect ({
+	spanRef,
+	rule,
+	applyDebug,
+	brRef,
+	containerSize,
+	text,
+	debug,
+}: OALayoutEffectProps) {
 	useLayoutEffect(() => {
 		if (spanRef.current?.parentNode) {
 			const parent = spanRef.current.parentNode as HTMLElement
@@ -29,11 +40,10 @@ function useOALayoutEffect (
 				spanRef.current.classList.remove(rule.className)
 			}
 
-			applyDebug(spanRef, DebugNodeState.NONE)
-
 			const parentRect = parent.getBoundingClientRect()
 			const spanRect = spanRef.current.getBoundingClientRect()
 			const isOnLeftTextSide = spanRect.left <= parentRect.left
+			let debugState: DebugNodeState
 
 			if (isOnLeftTextSide) {
 				let isOnTop = spanRect.top <= parentRect.top
@@ -57,23 +67,25 @@ function useOALayoutEffect (
 					spanRef.current.classList.add(rule.className)
 				}
 
-				applyDebug(spanRef, DebugNodeState.ACTIVE)
+				debugState = DebugNodeState.ACTIVE
 			} else {
-				applyDebug(spanRef, DebugNodeState.IDLE)
+				debugState = DebugNodeState.IDLE
 			}
+
+			applyDebug(spanRef, debugState)
 		}
 	}, [ containerSize, text, debug, ...Object.values(rule) ])
 }
 
 export function Node ({
-	isFirst,
-	isForelast,
-	appendSpace,
+	prefix = "",
 	text,
+	suffix = "",
 	rule,
 	debug,
 }: NodeProps) {
 	const spanRef = useRef<HTMLSpanElement>(null)
+	const debugSpanRef = useRef<HTMLSpanElement>(null)
 	const brRef = useRef<HTMLBRElement>(null)
 	const [ containerSize, setContainerSize ] = useState(0)
 
@@ -96,19 +108,22 @@ export function Node ({
 		resetBrStyles()
 	}
 
-	const applyDebug = (spanRef: RefObject<HTMLSpanElement>, state: DebugNodeState) => {
-		if (!spanRef.current) {
+	const applyDebug = (
+		spanRef: RefObject<HTMLSpanElement>,
+		state: DebugNodeState,
+	) => {
+		if (!debugSpanRef.current) {
 			return
 		}
 
-		if (debug) {
-			applyDebugStyles(spanRef.current, debug, state)
-		} else {
-			applyDebugStyles(spanRef.current, debug, DebugNodeState.NONE)
-		}
+		applyDebugStyles({
+			element: debugSpanRef.current,
+			debugOptions: debug,
+			state,
+		})
 	}
 
-	useOALayoutEffect(
+	useOALayoutEffect({
 		spanRef,
 		rule,
 		applyDebug,
@@ -116,7 +131,7 @@ export function Node ({
 		containerSize,
 		text,
 		debug,
-	)
+	})
 
 	useEffect(() => {
 		window.addEventListener("resize", handleResize)
@@ -140,7 +155,20 @@ export function Node ({
 					display: "inline-block",
 				} }
 			>
-				{ text }
+				{ debug ? (
+					<>
+						{ prefix }
+						<span
+							ref={ debugSpanRef }
+							data-oa-rule={ rule.id }
+						>
+							{ text }
+						</span>
+						{ suffix }
+					</>
+				) : (
+					prefix + text + suffix
+				) }
 			</span>
 		</Fragment>
 	)
